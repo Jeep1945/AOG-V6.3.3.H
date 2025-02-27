@@ -364,24 +364,7 @@ namespace AgOpenGPS //.Forms.Guidance
             oglSelfCont.SwapBuffers();
         }
 
-        //####################################
-        private void btnSlideRoll_Click(object sender, EventArgs e)
-        {
-            if (!mf.isSideHillTool)
-            {
-                btnSlideRoll.Image = Properties.Resources.RollSlidehill_on;
-                mf.isSideHillTool = true;
-                mf.CreateSideHillToolCurve();
-            }
-            else
-            {
-                btnSlideRoll.Image = Properties.Resources.RollSlidehill_off;
-                mf.isSideHillTool = false;
-            }
-
-        }
-
-        private void btnSaveContourPattern_Click(object sender, EventArgs e)
+         private void btnSaveContourPattern_Click(object sender, EventArgs e)
         {
             if (mf.ct.ContourLineList.Count > 1)
             {

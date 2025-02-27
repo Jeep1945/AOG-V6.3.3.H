@@ -1288,51 +1288,8 @@ namespace AgOpenGPS
                 // draws the violett AB buildline
                 GL.End();
                 GL.LineWidth(1);
-                GL.Disable(EnableCap.LineStipple);
-                GL.Color3(0.5f, 0.5f, 1.0f);   //blue 
-                /*
-                                if (mf.isSideGuideLines)
-                                {
-                                    Minline = howManyPathsAwayiCL - mf.GuidanceLine9;
-                                    if (Minline < 0) Minline = 0;
-                                    Maxline = howManyPathsAwayiCL + mf.GuidanceLine9 + 1;
-                                    if (Maxline > mf.ct.ContourLineList.Count) Maxline = mf.ct.ContourLineList.Count;
-                                }
-
-
-                                if ((mf.ct.ContourLineList.Count > 1) && (mf.trk.idx > 1))
-                                {
-                                    for (int iCL = Minline; iCL < Maxline; iCL++)
-                                    {
-                                        GL.Color3(0.5f, 0.5f, 1.0f);   //blue 
-                                        GL.Begin(PrimitiveType.LineStrip);
-                                        for (int iPoint = 0; iPoint < mf.ct.ContourLineList[iCL].Count; iPoint++)
-                                        {
-                                            GL.Vertex3(mf.ct.ContourLineList[iCL][iPoint].easting, mf.ct.ContourLineList[iCL][iPoint].northing, 0);
-                                        }
-                                        GL.End();
-                                        if (mf.isLineNumberon)    // linenumbers shown
-                                        {
-                                            GL.Color3(0.96, 0.2f, 0.2f);   // red   activ AB curve
-                                            mf.font.DrawText3D(mf.ct.ContourLineList[iCL][1].easting, mf.ct.ContourLineList[iCL][1].northing, iCL.ToString(), 2);
-                                            mf.font.DrawText3D(mf.ct.ContourLineList[iCL][(mf.ct.ContourLineList[iCL].Count - 1) / 2].easting, mf.ct.ContourLineList[iCL][(mf.ct.ContourLineList[iCL].Count - 1) / 2].northing, iCL.ToString(), 2);
-                                            mf.font.DrawText3D(mf.ct.ContourLineList[iCL][mf.ct.ContourLineList[iCL].Count - 2].easting, mf.ct.ContourLineList[iCL][mf.ct.ContourLineList[iCL].Count - 2].northing, iCL.ToString(), 2);
-                                            // look ahead point
-                                            //mf.font.DrawText3D(mf.guidanceLookPos.easting, mf.guidanceLookPos.northing, "0", 4);
-                                        }
-                                    }
-                
-                GL.LineWidth(3);     // 
-                GL.Color3(1.0f, 0.0f, 1.0f);   // violett  driving line
-                GL.Begin(PrimitiveType.LineStrip);
-                for (int iPoint = 0; iPoint < mf.ct.ContourLineList[howManyPathsAwayiCL].Count; iPoint++)
-                {
-                    GL.Vertex3(mf.ct.ContourLineList[howManyPathsAwayiCL][iPoint].easting, mf.ct.ContourLineList[howManyPathsAwayiCL][iPoint].northing, 0);
-                }
-                GL.Disable(EnableCap.LineStipple);
-                GL.End();
-            }
-                */
+                //GL.Disable(EnableCap.LineStipple);
+                //GL.Color3(0.5f, 0.5f, 1.0f);   //blue 
                 GL.LineWidth(1);
                 GL.Color3(0.96, 0.2f, 0.2f);   // red   activ AB curve
                 GL.Begin(PrimitiveType.LineStrip);

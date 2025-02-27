@@ -58,6 +58,8 @@ namespace AgOpenGPS.Forms.Guidance
             this.nudSetToolAntHight = new AgOpenGPS.NudlessNumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.nudToolbehindPivot = new AgOpenGPS.NudlessNumericUpDown();
+            this.btnSlideRoll = new System.Windows.Forms.Button();
+            this.btnThirdAntenna = new System.Windows.Forms.Button();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSetToolOffset)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSetToolAntHight)).BeginInit();
@@ -110,9 +112,9 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(159, 152);
+            this.label1.Location = new System.Drawing.Point(130, 184);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 48);
+            this.label1.Size = new System.Drawing.Size(179, 48);
             this.label1.TabIndex = 573;
             this.label1.Text = "Antenna height cm";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -122,9 +124,9 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             this.label2.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(186, 9);
+            this.label2.Location = new System.Drawing.Point(87, -1);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(245, 67);
+            this.label2.Size = new System.Drawing.Size(313, 37);
             this.label2.TabIndex = 574;
             this.label2.Text = "Tool Antenna Setup";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -154,12 +156,13 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             this.label4.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(318, 152);
+            this.label4.Location = new System.Drawing.Point(134, 227);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(95, 48);
+            this.label4.Size = new System.Drawing.Size(176, 48);
             this.label4.TabIndex = 578;
             this.label4.Text = "Antenna offset cm";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // btnSetupopenclose
             // 
@@ -184,111 +187,121 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             this.label5.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(158, 321);
+            this.label5.Location = new System.Drawing.Point(158, 353);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(152, 32);
             this.label5.TabIndex = 585;
             this.label5.Text = "Look Ahead";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
             this.label6.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(158, 397);
+            this.label6.Location = new System.Drawing.Point(158, 429);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(129, 32);
             this.label6.TabIndex = 586;
             this.label6.Text = "PWM ";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // hsbarToolLookAhead
             // 
             this.hsbarToolLookAhead.LargeChange = 1;
-            this.hsbarToolLookAhead.Location = new System.Drawing.Point(163, 359);
+            this.hsbarToolLookAhead.Location = new System.Drawing.Point(163, 391);
             this.hsbarToolLookAhead.Maximum = 10;
             this.hsbarToolLookAhead.Name = "hsbarToolLookAhead";
             this.hsbarToolLookAhead.Size = new System.Drawing.Size(235, 33);
             this.hsbarToolLookAhead.TabIndex = 587;
             this.hsbarToolLookAhead.Value = 3;
+            this.hsbarToolLookAhead.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hsbarToolLookAhead_Scroll);
             this.hsbarToolLookAhead.ValueChanged += new System.EventHandler(this.hsbarToolLookAhead_ValueChanged);
             // 
             // hToolPWM
             // 
             this.hToolPWM.LargeChange = 1;
-            this.hToolPWM.Location = new System.Drawing.Point(163, 429);
+            this.hToolPWM.Location = new System.Drawing.Point(163, 461);
             this.hToolPWM.Maximum = 255;
             this.hToolPWM.Name = "hToolPWM";
             this.hToolPWM.Size = new System.Drawing.Size(235, 33);
             this.hToolPWM.TabIndex = 588;
             this.hToolPWM.Value = 30;
+            this.hToolPWM.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hToolPWM_Scroll);
             this.hToolPWM.ValueChanged += new System.EventHandler(this.hToolPWM_ValueChanged);
             // 
             // label7
             // 
             this.label7.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(126, 359);
+            this.label7.Location = new System.Drawing.Point(126, 391);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 35);
             this.label7.TabIndex = 591;
             this.label7.Text = "0";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(400, 359);
+            this.label8.Location = new System.Drawing.Point(400, 391);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 35);
             this.label8.TabIndex = 592;
             this.label8.Text = "10";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
             // 
             this.label9.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(126, 427);
+            this.label9.Location = new System.Drawing.Point(126, 459);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(34, 35);
             this.label9.TabIndex = 593;
             this.label9.Text = "0";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label9.Click += new System.EventHandler(this.label9_Click);
             // 
             // label10
             // 
             this.label10.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(401, 427);
+            this.label10.Location = new System.Drawing.Point(401, 459);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(48, 35);
             this.label10.TabIndex = 594;
             this.label10.Text = "255";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // lblToolLookAhead
             // 
             this.lblToolLookAhead.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblToolLookAhead.ForeColor = System.Drawing.Color.Black;
-            this.lblToolLookAhead.Location = new System.Drawing.Point(335, 321);
+            this.lblToolLookAhead.Location = new System.Drawing.Point(335, 353);
             this.lblToolLookAhead.Name = "lblToolLookAhead";
             this.lblToolLookAhead.Size = new System.Drawing.Size(34, 35);
             this.lblToolLookAhead.TabIndex = 596;
             this.lblToolLookAhead.Text = "88";
             this.lblToolLookAhead.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblToolLookAhead.Click += new System.EventHandler(this.lblToolLookAhead_Click);
             // 
             // lblToolPWM
             // 
             this.lblToolPWM.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblToolPWM.ForeColor = System.Drawing.Color.Black;
-            this.lblToolPWM.Location = new System.Drawing.Point(315, 394);
+            this.lblToolPWM.Location = new System.Drawing.Point(315, 426);
             this.lblToolPWM.Name = "lblToolPWM";
             this.lblToolPWM.Size = new System.Drawing.Size(54, 35);
             this.lblToolPWM.TabIndex = 597;
             this.lblToolPWM.Text = "88";
             this.lblToolPWM.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblToolPWM.Click += new System.EventHandler(this.lblToolPWM_Click);
             // 
             // groupBox5
             // 
@@ -296,12 +309,13 @@ namespace AgOpenGPS.Forms.Guidance
             this.groupBox5.Controls.Add(this.rbtnToolAntennaRight);
             this.groupBox5.Controls.Add(this.rbtnToolAntennaLeft);
             this.groupBox5.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(134, 242);
+            this.groupBox5.Location = new System.Drawing.Point(134, 274);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(279, 84);
             this.groupBox5.TabIndex = 598;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Antenna Offset";
+            this.groupBox5.Enter += new System.EventHandler(this.groupBox5_Enter);
             // 
             // rbtnToolAntennaCenter
             // 
@@ -352,7 +366,7 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             this.nudSetToolOffset.BackColor = System.Drawing.Color.White;
             this.nudSetToolOffset.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.nudSetToolOffset.Location = new System.Drawing.Point(315, 203);
+            this.nudSetToolOffset.Location = new System.Drawing.Point(315, 235);
             this.nudSetToolOffset.Maximum = new decimal(new int[] {
             500,
             0,
@@ -368,13 +382,14 @@ namespace AgOpenGPS.Forms.Guidance
             this.nudSetToolOffset.Size = new System.Drawing.Size(98, 33);
             this.nudSetToolOffset.TabIndex = 579;
             this.nudSetToolOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudSetToolOffset.ValueChanged += new System.EventHandler(this.nudSetToolOffset_ValueChanged);
             this.nudSetToolOffset.Click += new System.EventHandler(this.nudSetToolOffset_Click);
             // 
             // nudSetToolAntHight
             // 
             this.nudSetToolAntHight.BackColor = System.Drawing.Color.White;
             this.nudSetToolAntHight.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.nudSetToolAntHight.Location = new System.Drawing.Point(163, 203);
+            this.nudSetToolAntHight.Location = new System.Drawing.Point(315, 192);
             this.nudSetToolAntHight.Maximum = new decimal(new int[] {
             500,
             0,
@@ -385,24 +400,26 @@ namespace AgOpenGPS.Forms.Guidance
             this.nudSetToolAntHight.Size = new System.Drawing.Size(98, 33);
             this.nudSetToolAntHight.TabIndex = 465;
             this.nudSetToolAntHight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudSetToolAntHight.ValueChanged += new System.EventHandler(this.nudSetToolAntHight_ValueChanged);
             this.nudSetToolAntHight.Click += new System.EventHandler(this.nudSetToolAntHight_Click);
             // 
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(143, 76);
+            this.label3.Location = new System.Drawing.Point(130, 140);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(144, 48);
+            this.label3.Size = new System.Drawing.Size(179, 48);
             this.label3.TabIndex = 599;
             this.label3.Text = "Antenna behind Tractor cm";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // nudToolbehindPivot
             // 
             this.nudToolbehindPivot.BackColor = System.Drawing.Color.White;
             this.nudToolbehindPivot.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.nudToolbehindPivot.Location = new System.Drawing.Point(164, 123);
+            this.nudToolbehindPivot.Location = new System.Drawing.Point(315, 148);
             this.nudToolbehindPivot.Maximum = new decimal(new int[] {
             2000,
             0,
@@ -413,7 +430,47 @@ namespace AgOpenGPS.Forms.Guidance
             this.nudToolbehindPivot.Size = new System.Drawing.Size(98, 33);
             this.nudToolbehindPivot.TabIndex = 600;
             this.nudToolbehindPivot.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudToolbehindPivot.ValueChanged += new System.EventHandler(this.nudToolbehindPivot_ValueChanged);
             this.nudToolbehindPivot.Click += new System.EventHandler(this.nudToolbehindPivot_Click);
+            // 
+            // btnSlideRoll
+            // 
+            this.btnSlideRoll.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnSlideRoll.BackColor = System.Drawing.Color.Transparent;
+            this.btnSlideRoll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSlideRoll.FlatAppearance.BorderColor = System.Drawing.SystemColors.HotTrack;
+            this.btnSlideRoll.FlatAppearance.BorderSize = 0;
+            this.btnSlideRoll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSlideRoll.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSlideRoll.Image = global::AgOpenGPS.Properties.Resources.RollSlidehill_off;
+            this.btnSlideRoll.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSlideRoll.Location = new System.Drawing.Point(315, 54);
+            this.btnSlideRoll.Name = "btnSlideRoll";
+            this.btnSlideRoll.Size = new System.Drawing.Size(93, 69);
+            this.btnSlideRoll.TabIndex = 601;
+            this.btnSlideRoll.Text = "Slope";
+            this.btnSlideRoll.UseVisualStyleBackColor = false;
+            this.btnSlideRoll.Click += new System.EventHandler(this.btnSlideRoll_Click);
+            // 
+            // btnThirdAntenna
+            // 
+            this.btnThirdAntenna.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnThirdAntenna.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnThirdAntenna.FlatAppearance.BorderColor = System.Drawing.SystemColors.HotTrack;
+            this.btnThirdAntenna.FlatAppearance.BorderSize = 0;
+            this.btnThirdAntenna.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnThirdAntenna.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThirdAntenna.Image = global::AgOpenGPS.Properties.Resources.AntennaNoOffset;
+            this.btnThirdAntenna.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnThirdAntenna.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnThirdAntenna.Location = new System.Drawing.Point(162, 54);
+            this.btnThirdAntenna.Name = "btnThirdAntenna";
+            this.btnThirdAntenna.Size = new System.Drawing.Size(93, 69);
+            this.btnThirdAntenna.TabIndex = 602;
+            this.btnThirdAntenna.Text = "Tool";
+            this.btnThirdAntenna.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnThirdAntenna.UseVisualStyleBackColor = false;
+            this.btnThirdAntenna.Click += new System.EventHandler(this.btnThirdAntenna_Click);
             // 
             // FormToolTracks
             // 
@@ -424,6 +481,8 @@ namespace AgOpenGPS.Forms.Guidance
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(470, 511);
             this.ControlBox = false;
+            this.Controls.Add(this.btnThirdAntenna);
+            this.Controls.Add(this.btnSlideRoll);
             this.Controls.Add(this.nudToolbehindPivot);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.groupBox5);
@@ -492,5 +551,7 @@ namespace AgOpenGPS.Forms.Guidance
         private System.Windows.Forms.RadioButton rbtnToolAntennaLeft;
         private System.Windows.Forms.Label label3;
         private NudlessNumericUpDown nudToolbehindPivot;
+        private System.Windows.Forms.Button btnSlideRoll;
+        private System.Windows.Forms.Button btnThirdAntenna;
     }
 }

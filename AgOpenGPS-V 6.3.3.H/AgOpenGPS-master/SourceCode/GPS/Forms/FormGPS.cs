@@ -121,7 +121,7 @@ namespace AgOpenGPS
 
         //drive after ContourPattern lines
         public bool isContourPattern = false;
-        public bool isSideHillTool = false;
+        public bool isSlopeline = false, isThirdAntenne = false;
         public bool isNewLineCurve = false;
         public double MaxDistanceSunPattern, DistanceA1B1, DistanceA2B2;
         public int howManyPathPattern, isData_Refresh = 3;

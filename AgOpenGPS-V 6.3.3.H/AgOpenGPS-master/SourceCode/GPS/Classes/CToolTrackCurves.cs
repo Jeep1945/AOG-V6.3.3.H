@@ -9,6 +9,8 @@ using System.Windows.Forms;
 
 namespace AgOpenGPS
 {
+    public enum TrackToolMode { None = 0, Tool = 2, Slope = 4, ToolSlope = 8};
+
     public class CToolTrack
     {
  
@@ -36,6 +38,8 @@ namespace AgOpenGPS
         public double ToolHeading;  // heading of curve points
         public int countAB;        //  howManyPathsAway from AB curveline
         public int ToolOffset; //Antenna on left side is neg
+        public int mode; //Antenna on left side is neg
+
 
         //constructor
         public CToolTrk()// FormGPS _f)
@@ -46,6 +50,7 @@ namespace AgOpenGPS
             nameAB = "AB Track";
             ToolOffset = 0;
             ToolHeading = 0;
+            mode = 0;
         }
     }
 }

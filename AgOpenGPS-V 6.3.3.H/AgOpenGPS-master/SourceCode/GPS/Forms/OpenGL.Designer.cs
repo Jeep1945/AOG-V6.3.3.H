@@ -336,9 +336,9 @@ namespace AgOpenGPS
                         }
                     }
 
-                    if (isSideHillTool)
+                    if (isThirdAntenne)
                     {
-                        CreateSideHillToolCurve();
+                        //CreateSideHillToolCurve();
                     }
 
                     //draw line creationcs
@@ -2591,7 +2591,7 @@ namespace AgOpenGPS
             font.DrawText(start, down, dire, textSize);
         }
 
-        public void CreateSideHillToolCurve()
+        public void DrawSideHillToolCurve()
         {
 
         }

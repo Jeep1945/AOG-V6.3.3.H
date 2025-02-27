@@ -2798,14 +2798,15 @@ namespace AgOpenGPS
                         writer.WriteLine(tooltrk.gToolArr[i].ToolOffset);
                         writer.WriteLine(tooltrk.gToolArr[i].ToolHeading);
                         writer.WriteLine(tooltrk.gToolArr[i].countAB);
-                        writer.WriteLine(tooltrk.gToolArr[i].curvePts.Count.ToString(CultureInfo.InvariantCulture));
+                        writer.WriteLine(tooltrk.gToolArr[i].mode);
+                        writer.WriteLine(tooltrk.gToolArr[i].curve_Toolpivot_Pts.Count.ToString(CultureInfo.InvariantCulture));
                         {
-                            for (int j = 0; j < tooltrk.gToolArr[i].curvePts.Count; j++)
+                            for (int j = 0; j < tooltrk.gToolArr[i].curve_Toolpivot_Pts.Count; j++)
                                 writer.WriteLine(
-                                    Math.Round(tooltrk.gToolArr[i].curvePts[j].easting, 7).ToString(CultureInfo.InvariantCulture) + "," +
-                                    Math.Round(tooltrk.gToolArr[i].curvePts[j].northing, 7).ToString(CultureInfo.InvariantCulture) + "," +
-                                    Math.Round(tooltrk.gToolArr[i].curvePts[j].heading, 7).ToString(CultureInfo.InvariantCulture) + "," +
-                                    Math.Round(tooltrk.gToolArr[i].curvePts[j].toolroll, 2).ToString(CultureInfo.InvariantCulture));
+                                    Math.Round(tooltrk.gToolArr[i].curve_Toolpivot_Pts[j].easting, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                                    Math.Round(tooltrk.gToolArr[i].curve_Toolpivot_Pts[j].northing, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                                    Math.Round(tooltrk.gToolArr[i].curve_Toolpivot_Pts[j].heading, 7).ToString(CultureInfo.InvariantCulture) + "," +
+                                    Math.Round(tooltrk.gToolArr[i].curve_Toolpivot_Pts[j].toolroll, 2).ToString(CultureInfo.InvariantCulture));
                         }
                     }
                 }
@@ -2845,6 +2846,8 @@ namespace AgOpenGPS
                                 tooltrk.gToolArr[i].ToolHeading = int.Parse(line);
                                 line = reader.ReadLine();
                                 tooltrk.gToolArr[i].countAB = int.Parse(line);
+                                line = reader.ReadLine();
+                                tooltrk.gToolArr[i].mode = int.Parse(line);
 
                                 line = reader.ReadLine();
                                 int numPoints = int.Parse(line);
@@ -2858,7 +2861,7 @@ namespace AgOpenGPS
                                         double.Parse(words[3], CultureInfo.InvariantCulture));
 
                                     //add the point
-                                    tooltrk.gToolArr[i].curvePts.Add(vecPt);
+                                    tooltrk.gToolArr[i].curve_Toolpivot_Pts.Add(vecPt);
                                 }
                             }
                         }

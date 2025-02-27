@@ -69,7 +69,6 @@ namespace AgOpenGPS
             this.lblToolWidth = new System.Windows.Forms.Label();
             this.btnCycleBackwardFirstAB = new System.Windows.Forms.Button();
             this.btnCycleForwardFirstAB = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.tlp1Cont.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSetDistanceLineB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSetDistanceLineA)).BeginInit();
@@ -107,7 +106,6 @@ namespace AgOpenGPS
             this.tlp1Cont.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.76009F));
             this.tlp1Cont.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.76009F));
             this.tlp1Cont.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.76009F));
-            this.tlp1Cont.Controls.Add(this.button1, 3, 9);
             this.tlp1Cont.Controls.Add(this.btnExtentPlus, 3, 16);
             this.tlp1Cont.Controls.Add(this.btnExtentMinus, 2, 16);
             this.tlp1Cont.Controls.Add(this.label7, 0, 16);
@@ -182,7 +180,7 @@ namespace AgOpenGPS
             this.btnExtentPlus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnExtentPlus.Location = new System.Drawing.Point(151, 634);
             this.btnExtentPlus.Name = "btnExtentPlus";
-            this.btnExtentPlus.Size = new System.Drawing.Size(44, 34);
+            this.btnExtentPlus.Size = new System.Drawing.Size(44, 33);
             this.btnExtentPlus.TabIndex = 599;
             this.btnExtentPlus.Text = "+";
             this.btnExtentPlus.UseCompatibleTextRendering = true;
@@ -201,7 +199,7 @@ namespace AgOpenGPS
             this.btnExtentMinus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnExtentMinus.Location = new System.Drawing.Point(101, 634);
             this.btnExtentMinus.Name = "btnExtentMinus";
-            this.btnExtentMinus.Size = new System.Drawing.Size(44, 34);
+            this.btnExtentMinus.Size = new System.Drawing.Size(44, 33);
             this.btnExtentMinus.TabIndex = 598;
             this.btnExtentMinus.Text = "-";
             this.btnExtentMinus.UseCompatibleTextRendering = true;
@@ -246,7 +244,7 @@ namespace AgOpenGPS
             this.btnZoomPlus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnZoomPlus.Location = new System.Drawing.Point(151, 594);
             this.btnZoomPlus.Name = "btnZoomPlus";
-            this.btnZoomPlus.Size = new System.Drawing.Size(44, 34);
+            this.btnZoomPlus.Size = new System.Drawing.Size(44, 33);
             this.btnZoomPlus.TabIndex = 595;
             this.btnZoomPlus.Text = "+";
             this.btnZoomPlus.UseCompatibleTextRendering = true;
@@ -265,7 +263,7 @@ namespace AgOpenGPS
             this.btnZoomMinus.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnZoomMinus.Location = new System.Drawing.Point(101, 594);
             this.btnZoomMinus.Name = "btnZoomMinus";
-            this.btnZoomMinus.Size = new System.Drawing.Size(44, 34);
+            this.btnZoomMinus.Size = new System.Drawing.Size(44, 33);
             this.btnZoomMinus.TabIndex = 594;
             this.btnZoomMinus.Text = "-";
             this.btnZoomMinus.UseCompatibleTextRendering = true;
@@ -748,26 +746,6 @@ namespace AgOpenGPS
             this.btnCycleForwardFirstAB.UseVisualStyleBackColor = false;
             this.btnCycleForwardFirstAB.Click += new System.EventHandler(this.btnCycleForwardFirstAB_Click);
             // 
-            // button1
-            // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.tlp1Cont.SetColumnSpan(this.button1, 2);
-            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.HotTrack;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Image = global::AgOpenGPS.Properties.Resources.RollSlidehill_off;
-            this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button1.Location = new System.Drawing.Point(202, 364);
-            this.button1.Name = "button1";
-            this.tlp1Cont.SetRowSpan(this.button1, 2);
-            this.button1.Size = new System.Drawing.Size(93, 70);
-            this.button1.TabIndex = 600;
-            this.button1.Text = "Slope";
-            this.button1.UseVisualStyleBackColor = false;
-            // 
             // FormContour
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -780,7 +758,7 @@ namespace AgOpenGPS
             this.ForeColor = System.Drawing.Color.Black;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1022, 674);
+            this.MinimumSize = new System.Drawing.Size(1022, 673);
             this.Name = "FormContour";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -834,6 +812,5 @@ namespace AgOpenGPS
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnExtentPlus;
-        private System.Windows.Forms.Button button1;
     }
 }

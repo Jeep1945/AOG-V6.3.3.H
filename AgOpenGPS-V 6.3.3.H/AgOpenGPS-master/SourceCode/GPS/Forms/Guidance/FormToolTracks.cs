@@ -118,13 +118,25 @@ namespace AgOpenGPS.Forms.Guidance
                 }
                 mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts.Add(pointB);  // add new 3. antennapoint to curve
                 ToolLastPoint = pointB;
-                pointB = new vecRoll(PivotToolLine.easting, PivotToolLine.northing, pointA.heading, RollToolVeh);
-                mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Add(pointB);  // add new 3. antennapoint to curve
                 HelpPoint = pointA;
+                double east = mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count - 1].easting;
+                double north = mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count - 1].northing;
+                double rollt = 0;
+                vecRoll pointC = new vecRoll(east, north, pointA.heading, rollt);
+                vecRoll pointD = new vecRoll(PivotToolLine.easting, PivotToolLine.northing, pointA.heading, rollt);
+                if (mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count > 1)
+                {
+                    int Mcount = mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count;
+                    mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.RemoveAt(Mcount - 1);  // add 3. antennapoint to curve last point
+                    mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Add(pointC);  // add 3. antennapoint to curve last point
+                }
+                mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Add(pointD);  // add new 3. antennapoint to curve
+
                 // Console.WriteLine("ToolLastPoint" + pointB.easting + "  " + pointB.northing + "  " + pointB.heading + "  " + pointB.toolroll);
             }
             mf.tooltrk.SelectedLineNumber = SelectedTrackidx;
-            mf.curve.DrawToolCurve();
+            if ((mf.tooltrk.gToolArr.Count > 0) && (mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts.Count > 2))
+                mf.curve.DrawToolCurve();
         }
 
         private void FindToolTrackXTE()
@@ -133,14 +145,14 @@ namespace AgOpenGPS.Forms.Guidance
             int ccPa = 0;
             double minDistAPa = 100000;
 
-            if (mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts.Count > 4)
+            if (mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count > 4)
             {
-                for (int ip = 0; ip < mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts.Count - 1; ip++)
+                for (int ip = 0; ip < mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count - 1; ip++)
                 {
-                    double distPa = ((mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ip].easting - ToolPointNow.easting)
-                    * (mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ip].easting - ToolPointNow.easting))
-                    + ((mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ip].northing - ToolPointNow.northing)
-                    * (mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ip].northing - ToolPointNow.northing));
+                    double distPa = ((mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ip].easting - PivotToolLine.easting)
+                    * (mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ip].easting - PivotToolLine.easting))
+                    + ((mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ip].northing - PivotToolLine.northing)
+                    * (mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ip].northing - PivotToolLine.northing));
                     if (distPa < minDistAPa)
                     {
                         minDistAPa = distPa;
@@ -149,16 +161,16 @@ namespace AgOpenGPS.Forms.Guidance
                 }
             }
             // formula of Heron
-            CircumLengthAB = glm.Distance(mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ccPa], mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ccPa + 1]);
-            CircumLengthBC = glm.Distance(ToolPointNow, mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ccPa + 1]);
-            CircumLengthCA = glm.Distance(mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ccPa], ToolPointNow);
+            CircumLengthAB = glm.Distance(mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ccPa], mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ccPa + 1]);
+            CircumLengthBC = glm.Distance(PivotToolLine, mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ccPa + 1]);
+            CircumLengthCA = glm.Distance(mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ccPa], PivotToolLine);
             CircumLength = CircumLengthAB + CircumLengthBC + CircumLengthCA;
 
             ToolXTE = (int)(200 * CircumLengthAB * Math.Sqrt(CircumLength * (CircumLength - CircumLengthAB) * (CircumLength - CircumLengthBC) * (CircumLength - CircumLengthCA)));
 
             double guidanceToolLookDist = mf.avgSpeed * 0.277777 * ToolLookahead;
-            mf.guidanceToolLookPos.easting = ToolPointNow.easting + (Math.Sin(mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ccPa].heading) * guidanceToolLookDist);
-            mf.guidanceToolLookPos.northing = ToolPointNow.northing + (Math.Cos(mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts[ccPa].heading) * guidanceToolLookDist);
+            mf.guidanceToolLookPos.easting = PivotToolLine.easting + (Math.Sin(mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ccPa].heading) * guidanceToolLookDist);
+            mf.guidanceToolLookPos.northing = PivotToolLine.northing + (Math.Cos(mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[ccPa].heading) * guidanceToolLookDist);
 
             isHeadingToolSameWay = Math.PI - Math.Abs(Math.Abs(mf.pivotAxlePos.heading - mf.tooltrk.gToolArr[SelectedTrackidx].ToolHeading) - Math.PI) < glm.PIBy2;
             nudSetOfset1 = nudSetOfset;
@@ -170,16 +182,46 @@ namespace AgOpenGPS.Forms.Guidance
 
         }
 
+        private void LoadupTracks_Vehicle()
+        {
+            mf.tooltrk.gToolArr.Sort((a, b) => a.countAB - b.countAB);
+
+            for (int idx = 0; idx < mf.tooltrk.gToolArr.Count; idx++)
+            {
+                mf.ct.ContourLineList.Add(new List<vec3>());
+                for (int jidx = 0; jidx < mf.tooltrk.gToolArr[idx].curve_Toolpivot_Pts.Count; jidx++)
+                {
+                    double east = mf.tooltrk.gToolArr[idx].curve_Toolpivot_Pts[jidx].easting;
+                    double north = mf.tooltrk.gToolArr[idx].curve_Toolpivot_Pts[jidx].northing;
+                    double head = mf.tooltrk.gToolArr[idx].curve_Toolpivot_Pts[jidx].heading;
+                    vec3 pointE = new vec3(east, north, head);
+
+                    mf.ct.ContourLineList[mf.tooltrk.gToolArr[idx].countAB][jidx] = pointE;
+                }
+            }
+
+            if (mf.ct.ContourLineList.Count > 1)
+            {
+                mf.trk.gArr.Add(new CTrk());
+                mf.trk.gArr[mf.trk.gArr.Count - 1].name = ("&Pa " + 1);
+                mf.trk.gArr[mf.trk.gArr.Count - 1].mode = (int)TrackMode.Curve;
+                mf.trk.gArr[mf.trk.gArr.Count - 1].curvePts = mf.ct.ContourLineList[0];
+            }
+            mf.FileSaveTracks();
+            Close();
+
+        }
+
+        private void btnDeletePattern_Click(object sender, EventArgs e)
+        {
+            mf.FileDeletePatternTracks();
+            Close();
+        }
+
+
         private void ToolAtWork()
         {
             FindToolTrackXTE();
-            // if (((Math.Abs(mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curvePts[0].heading - mf.pivotAxlePos.heading)) < glm.PIBy2) || (Math.Abs(mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curvePts[0].heading - mf.pivotAxlePos.heading) > 3 * glm.PIBy2))
-            //   isToolSameHeading = true;
-            // else
-            //   isToolSameHeading = false;
-
-            //mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].ToolHeading = mf.pivotAxlePos.heading;
-
 
             Console.WriteLine(" sending XTE to Tool ESP32 ");
             mf.p_233.pgn[mf.p_233.ToolXTELo] = unchecked((byte)((int)(ToolXTE)));
@@ -198,24 +240,31 @@ namespace AgOpenGPS.Forms.Guidance
 
         private void btnAddToolTrackPts_Click(object sender, EventArgs e)
         {
-            mf.tooltrk.isbtnAddToolTrackPts = !mf.tooltrk.isbtnAddToolTrackPts;
-            mf.tooltrk.isbtnToolTrackStop = false;
-            mf.tooltrk.isbtnToolAtWork = false;
-
-            if (mf.tooltrk.isbtnAddToolTrackPts)
+            if ((mf.isThirdAntenne) || (mf.isSlopeline))
             {
-                mf.TimedMessageBox(3000, "Record Tool Curve  ", " started ");
-                btnToolAtWork.Image = AgOpenGPS.Properties.Resources.AutoSteerOff;
-                btnAddToolTrackPts.BackColor = Color.GreenYellow;
+                mf.tooltrk.isbtnAddToolTrackPts = !mf.tooltrk.isbtnAddToolTrackPts;
+                mf.tooltrk.isbtnToolTrackStop = false;
+                mf.tooltrk.isbtnToolAtWork = false;
 
-                ToolStartRecFirstPoint();  // check a few things
+                if (mf.tooltrk.isbtnAddToolTrackPts)
+                {
+                    mf.TimedMessageBox(3000, "Record Tool Curve  ", " started ");
+                    btnToolAtWork.Image = AgOpenGPS.Properties.Resources.AutoSteerOff;
+                    btnAddToolTrackPts.BackColor = Color.YellowGreen;
 
+                    if (mf.isThirdAntenne) ToolStartRecFirstPoint();  // check a few things
+                }
+                else
+                {
+                    mf.TimedMessageBox(3000, "Record Tool Curve  ", "stopped   ");
+                    btnAddToolTrackPts.BackColor = Color.Transparent;
+                    nudSetNumOfLine = 0;
+                }
             }
             else
             {
-                mf.TimedMessageBox(3000, "Record Tool Curve  ", "stopped   ");
-                btnAddToolTrackPts.BackColor = Color.Transparent;
-                nudSetNumOfLine = 0;
+                btnSetupopenclose1_Click();
+                mf.TimedMessageBox(3000, "      Record ", "Tool or Slope");
             }
         }
 
@@ -282,7 +331,11 @@ namespace AgOpenGPS.Forms.Guidance
                 mf.TimedMessageBox(3000, "Tool Steering  ", "activated ");
                 btnToolAtWork.Image = AgOpenGPS.Properties.Resources.AutoSteerOn;
 
-                FindactivLine();
+                if ((mf.isThirdAntenne) && (!mf.isSlopeline))
+                {
+                    LoadupTracks_Vehicle();
+                    FindactivLine();
+                }
 
                 if (mf.tooltrk.gToolArr.Count == 0)
                 {
@@ -315,10 +368,10 @@ namespace AgOpenGPS.Forms.Guidance
                         {
                             if (mf.tooltrk.gToolArr[iSelectAB].countAB == mf.curve.howManyPathsAway)
                             {
-                                lastLat = mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts.Count - 1].easting;
-                                lastLong = mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts.Count - 1].northing;
-                                lastheading = mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts.Count - 1].heading;
-                                lastroll = mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_sowing_Pts.Count - 1].toolroll;
+                                lastLat = mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts.Count - 1].easting;
+                                lastLong = mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts.Count - 1].northing;
+                                lastheading = mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts.Count - 1].heading;
+                                lastroll = mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[iSelectAB].curve_Toolpivot_Pts.Count - 1].toolroll;
                                 isToolTrackexist = true;
                                 SelectedTrackidx = iSelectAB;
                             }
@@ -328,32 +381,182 @@ namespace AgOpenGPS.Forms.Guidance
             }
         }
 
+        private void btnThirdAntenna_Click(object sender, EventArgs e)
+        {
+            if (!mf.isThirdAntenne)
+            {
+                btnThirdAntenna.BackColor = Color.GreenYellow;
+                mf.isThirdAntenne = true;
+                btnSlideRoll.Image = Properties.Resources.RollSlidehill_off;
+                mf.isSlopeline = false;
+            }
+            else
+            {
+                btnThirdAntenna.BackColor = Color.WhiteSmoke;
+                mf.isThirdAntenne = false;
+            }
+
+
+        }
+
+        private void btnSlideRoll_Click(object sender, EventArgs e)
+        {
+            if (!mf.isSlopeline)
+            {
+                btnSlideRoll.Image = Properties.Resources.RollSlidehill_on;
+                mf.isSlopeline = true;
+
+                btnThirdAntenna.BackColor = Color.WhiteSmoke;
+                mf.isThirdAntenne = false;
+
+            }
+            else
+            {
+                btnSlideRoll.Image = Properties.Resources.RollSlidehill_off;
+                mf.isSlopeline = false;
+            }
+
+        }
+
+        private void CreateSideHillToolCurve()
+        {
+            if (mf.isSlopeline)
+            {
+
+                if (mf.tooltrk.gToolArr.Count < 1)
+                {
+                    double Pointdiff = 0;
+
+                    vec3 ContourPointsABSlope = new vec3(mf.trk.gArr[mf.trk.idx].ptA.easting, mf.trk.gArr[mf.trk.idx].ptB.northing, mf.trk.gArr[mf.trk.idx].heading);
+
+                    mf.tooltrk.gToolArr.Add(new CToolTrk());
+                    mf.ct.ContourLineList.Add(new List<vec3>());
+
+                    if (mf.trk.gArr[mf.trk.idx].mode == (int)TrackMode.AB)
+                    {
+                        double A1A2Distance = 0;
+
+                        A1A2Distance = glm.Distance(mf.trk.gArr[mf.trk.idx].ptA, mf.trk.gArr[mf.trk.idx].ptB);
+
+                        while (Pointdiff < A1A2Distance)  // make lines between Crossingpoints A1-A2 and B1-B2
+                        {
+                            Pointdiff += 1.3;
+                            ContourPointsABSlope.easting += (Math.Sin(mf.trk.gArr[mf.trk.idx].heading) * 1.3);
+                            ContourPointsABSlope.northing += (Math.Cos(mf.trk.gArr[mf.trk.idx].heading) * 1.3);
+                            ContourPointsABSlope.heading = mf.trk.gArr[mf.trk.idx].heading;
+                            mf.ct.ContourLineList[0].Add(ContourPointsABSlope);
+                        }
+
+                        mf.tooltrk.gToolArr[0].ToolHeading = mf.trk.gArr[mf.trk.idx].heading;
+                        mf.tooltrk.gToolArr[0].nameAB = mf.trk.gArr[mf.trk.idx].name;
+                        mf.tooltrk.gToolArr[0].countAB = 0;
+                        mf.tooltrk.gToolArr[0].ToolOffset = 0; // (int)nudSetOfset;
+                    }
+                    else
+                    {
+                        mf.tooltrk.gToolArr[0].ToolHeading = mf.trk.gArr[mf.trk.idx].heading;
+                        mf.tooltrk.gToolArr[0].nameAB = mf.trk.gArr[mf.trk.idx].name;
+                        mf.tooltrk.gToolArr[0].countAB = 0;
+                        mf.tooltrk.gToolArr[0].ToolOffset = 0; // (int)nudSetOfset;
+                    }
+
+                    vecRoll Slopebeginn = new vecRoll(0, 0, 0, 0);
+                    vec3 SlopeCountur = new vec3(0, 0, 0);
+
+                    for (int islope = 1; islope < mf.trk.gArr[mf.trk.idx].curvePts.Count; islope++)
+                    {
+                        Slopebeginn = new vecRoll(mf.trk.gArr[mf.trk.idx].curvePts[islope].easting, mf.trk.gArr[mf.trk.idx].curvePts[islope].northing, mf.trk.gArr[mf.trk.idx].curvePts[islope].heading, RollToolVeh);
+                        SlopeCountur = new vec3(mf.trk.gArr[mf.trk.idx].curvePts[islope].easting, mf.trk.gArr[mf.trk.idx].curvePts[islope].northing, mf.trk.gArr[mf.trk.idx].curvePts[islope].heading);
+                        mf.tooltrk.gToolArr[1].curve_Toolpivot_Pts.Add(Slopebeginn);
+                        mf.ct.ContourLineList[1].Add(SlopeCountur);
+                    }
+
+                    mf.trk.gArr.Add(new CTrk());
+                    mf.trk.gArr[mf.trk.gArr.Count - 1].name = ("&Pa " + 1);
+                    mf.trk.gArr[mf.trk.gArr.Count - 1].mode = (int)TrackMode.Curve;
+                    mf.trk.gArr[mf.trk.gArr.Count - 1].curvePts = mf.ct.ContourLineList[0];
+                    mf.FileSaveTracks();
+
+                    mf.trk.idx++;
+                    mf.curve.DrawContourPatternCurve();
+                }
+                else
+                {
+                    vecRoll Slopebeginn = new vecRoll(0, 0, 0, 0);
+                    vec3 SlopeCountur = new vec3(0, 0, 0);
+
+                    SelectedTrackidx = mf.tooltrk.gToolArr.Count - 1;
+                    double minDistance = mf.avgSpeed * 0.1;  // distance of points in the new curve in m
+                    double distance = glm.Distance(mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count - 1], PivotToolSlopeLine);  // last point to 3. antennapoint
+
+                    if (distance > minDistance)
+                    {
+                        Slopebeginn = new vecRoll(PivotToolSlopeLine.easting, PivotToolSlopeLine.northing, mf.pivotAxlePos.heading, RollToolVeh);
+                        SlopeCountur = new vec3(PivotToolSlopeLine.easting, PivotToolSlopeLine.northing, mf.pivotAxlePos.heading);
+                        mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Add(Slopebeginn);
+                        mf.ct.ContourLineList[SelectedTrackidx].Add(SlopeCountur);
+                    }
+
+                }
+            }
+
+            mf.curve.DrawContourPatternCurve();
+
+
+        }
+
         private void Calculate_All_Lines()
         {
             double widthMinusOverlap;
             double XTE_Roll = Math.Sin(RollToolVeh) * nudSetToolAnthight * 0.01;   // Rolldistance
             double XTE_Center_east = Math.Cos(HelpPoint.heading) * (nudSetOfset + XTE_Roll);  //  distance to center tractor pivot line, east
             double XTE_Center_north = Math.Sin(HelpPoint.heading) * (nudSetOfset + XTE_Roll);    // distance to center tractor pivot line, north
-            //  get coordinats from ESP32(UDPComm.Designer)
-            ToolPointNow.easting = mf.pn.ToolLatitude;
-            ToolPointNow.northing = mf.pn.ToolLongitude;
-
-            // line points of toolantenna 
-            ToolPointNow.easting = mf.pn.ToolLatitude - Math.Cos(HelpPoint.heading) * XTE_Roll;
-            ToolPointNow.northing = mf.pn.ToolLongitude + Math.Sin(HelpPoint.heading) * XTE_Roll;
-
-            // line points middle of tool 
-            PivotToolLine.easting = mf.pn.ToolLatitude - XTE_Center_east;
-            PivotToolLine.northing = mf.pn.ToolLongitude + XTE_Center_north;
-
-            // next line with toolwidth dependence on roll and smae inclination
             widthMinusOverlap = mf.tool.width - mf.tool.overlap;
-            widthMinusOverlap *= Math.Cos(RollToolVeh);
-            PivotToolSlopeLine.easting = PivotToolLine.easting - Math.Cos(HelpPoint.heading) * widthMinusOverlap;
-            PivotToolSlopeLine.northing = PivotToolLine.northing + Math.Sin(HelpPoint.heading) * widthMinusOverlap;
+
+            //  get coordinats from ESP32(UDPComm.Designer)
+            if ((mf.isThirdAntenne) && (!mf.isSlopeline))
+            {
+                ToolPointNow.easting = mf.pn.ToolLatitude;
+                ToolPointNow.northing = mf.pn.ToolLongitude;
+
+                // line points of toolantenna 
+                ToolPointNow.easting = mf.pn.ToolLatitude - Math.Cos(HelpPoint.heading) * XTE_Roll;
+                ToolPointNow.northing = mf.pn.ToolLongitude + Math.Sin(HelpPoint.heading) * XTE_Roll;
+
+                // line points middle of tool 
+                PivotToolLine.easting = mf.pn.ToolLatitude - XTE_Center_east;
+                PivotToolLine.northing = mf.pn.ToolLongitude + XTE_Center_north;
+            }
+
+            if ((mf.isThirdAntenne) && (mf.isSlopeline))
+            {
+                ToolPointNow.easting = mf.pn.ToolLatitude;
+                ToolPointNow.northing = mf.pn.ToolLongitude;
+
+                // line points of toolantenna 
+                ToolPointNow.easting = mf.pn.ToolLatitude - Math.Cos(HelpPoint.heading) * XTE_Roll;
+                ToolPointNow.northing = mf.pn.ToolLongitude + Math.Sin(HelpPoint.heading) * XTE_Roll;
+
+                // line points middle of tool 
+                PivotToolLine.easting = mf.pn.ToolLatitude - XTE_Center_east;
+                PivotToolLine.northing = mf.pn.ToolLongitude + XTE_Center_north;
+
+
+                // next line with toolwidth dependence on roll and same inclination
+                widthMinusOverlap *= Math.Cos(RollToolVeh);
+                PivotToolSlopeLine.easting = PivotToolLine.easting - Math.Cos(HelpPoint.heading) * widthMinusOverlap;
+                PivotToolSlopeLine.northing = PivotToolLine.northing + Math.Sin(HelpPoint.heading) * widthMinusOverlap;
+            }
+
+            if ((!mf.isThirdAntenne) && (mf.isSlopeline))
+            {
+                PivotToolSlopeLine.easting = mf.pn.fix.easting - Math.Cos(HelpPoint.heading) * widthMinusOverlap;
+                PivotToolSlopeLine.northing = mf.pn.fix.northing + Math.Sin(HelpPoint.heading) * widthMinusOverlap;
+            }
+
 
             // position for antenna point on screen
-            if (!isSimulatorOn)
+            if (isSimulatorOn)
             {
                 Tooleasting = nudSetOfset * 0.01;
                 Toolnorthing = nudSetToolPivot * 0.01;
@@ -362,14 +565,6 @@ namespace AgOpenGPS.Forms.Guidance
                 mf.tool.AntennaToolOfset.northing = Toolnorthing;
                 // back pivot
                 mf.tool.pivotTool.easting = mf.tool.AntennaToolOfset.easting - nudSetOfset * 0.01;
-                mf.tool.pivotTool.northing = mf.tool.AntennaToolOfset.northing;
-            }
-            else
-            {
-                mf.tool.AntennaToolOfset.easting = ToolPointNow.easting + XTE_Roll;
-                mf.tool.AntennaToolOfset.northing = ToolPointNow.northing;
-                // back pivot
-                mf.tool.pivotTool.easting = mf.tool.AntennaToolOfset.easting + nudSetOfset * 0.01;
                 mf.tool.pivotTool.northing = mf.tool.AntennaToolOfset.northing;
             }
         }
@@ -383,7 +578,7 @@ namespace AgOpenGPS.Forms.Guidance
                 mf.tooltrk.gToolArr.Add(new CToolTrk());
                 SelectedTrackidx = mf.tooltrk.gToolArr.Count - 1;
                 vecRoll pointbeginn = new vecRoll(mf.pn.ToolLatitude, mf.pn.ToolLongitude, mf.pivotAxlePos.heading, RollToolVeh);
-                mf.tooltrk.gToolArr[SelectedTrackidx].curve_sowing_Pts.Add(pointbeginn);
+                mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Add(pointbeginn);
                 mf.tooltrk.gToolArr[SelectedTrackidx].ToolHeading = mf.pivotAxlePos.heading;
                 mf.tooltrk.gToolArr[SelectedTrackidx].nameAB = mf.trk.gArr[mf.trk.idx].name;
                 mf.tooltrk.gToolArr[SelectedTrackidx].countAB = (int)mf.curve.howManyPathsAway;
@@ -402,6 +597,86 @@ namespace AgOpenGPS.Forms.Guidance
         {
             mf.KeypadToNUD((NudlessNumericUpDown)sender, this);
             nudSetToolAnthight = (double)nudSetToolAntHight.Value;
+
+        }
+
+        private void nudToolbehindPivot_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblToolPWM_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblToolLookAhead_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void hToolPWM_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void hsbarToolLookAhead_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nudSetToolOffset_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nudSetToolAntHight_ValueChanged(object sender, EventArgs e)
+        {
 
         }
 
@@ -497,6 +772,11 @@ namespace AgOpenGPS.Forms.Guidance
 
         private void btnSetupopenclose_Click(object sender, EventArgs e)
         {
+            btnSetupopenclose1_Click();
+        }
+
+        private void btnSetupopenclose1_Click()
+        {
             if (isScreenbig)
             {
                 btnSetupopenclose.Image = AgOpenGPS.Properties.Resources.ArrowRight;
@@ -519,11 +799,10 @@ namespace AgOpenGPS.Forms.Guidance
         private void timer1_Tick(object sender, EventArgs e)
         {
             Calculate_All_Lines();
+            RollToolVeh = mf.ahrs.imuRoll;
 
-            if (mf.isBtnAutoSteerOn)
+            if ((mf.isBtnAutoSteerOn) && (!mf.isSlopeline))
             {
-
-                RollToolVeh = mf.ahrs.imuRoll;
 
                 if (mf.tooltrk.isbtnAddToolTrackPts)
                 {
@@ -533,6 +812,11 @@ namespace AgOpenGPS.Forms.Guidance
                 {
                     ToolAtWork();
                 }
+            }
+
+            if ((mf.isSlopeline) && (mf.tooltrk.isbtnAddToolTrackPts))
+            {
+                CreateSideHillToolCurve();
             }
         }
 
