@@ -305,7 +305,7 @@ namespace AgOpenGPS
                 Top = 0;
                 Left = 0;
             }
-            if (mf.isLightBarNotSteerBar)
+            if (!mf.isLightBarNotSteerBar)
             {
                 rbtnLightBar.Checked = true;
                 rbtnSteerBar.Checked = false;

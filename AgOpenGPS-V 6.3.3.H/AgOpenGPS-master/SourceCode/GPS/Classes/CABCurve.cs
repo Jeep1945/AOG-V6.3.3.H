@@ -300,6 +300,7 @@ namespace AgOpenGPS
                         for (int jLine = ccPaLineA; jLine < ddPaLineA; jLine++)
                         {
                             if (ddPa >= mf.ct.ContourLineList[jLine].Count) ddPa = mf.ct.ContourLineList[jLine].Count - 1;
+
                             for (int j = ccPa; j < ddPa; j++)
                             {
                                 double distPa = ((mf.guidanceLookPos.easting - mf.ct.ContourLineList[jLine][j].easting)
@@ -1254,19 +1255,19 @@ namespace AgOpenGPS
             GL.LineWidth(2);
             GL.Color3(0.96, 0.2f, 0.2f);   // red   activ AB curve
             GL.Begin(PrimitiveType.LineStrip);
-            ptCountPa = mf.ct.ContourLineList[miCL].Count;
-            for (int h = 0; h < ptCountPa - 1; h += 10)
-            {
+            //ptCountPa = mf.ct.ContourLineList[miCL].Count;
+            //for (int h = 0; h < ptCountPa - 1; h += 10)
+            //{
                 // draw heading of linepoints
                 //mf.font.DrawText3D(mf.ct.ContourLineList[howManyPathsAwayiCL][h].easting, mf.ct.ContourLineList[howManyPathsAwayiCL][h].northing, (mf.ct.ContourLineList[howManyPathsAwayiCL][h].heading).ToString("0.####"));//  h.ToString());
                 // draw numbers of linepoints
                 // mf.font.DrawText3D(mf.ct.ContourLineList[miCL][h].easting, mf.ct.ContourLineList[miCL][h].northing, h.ToString());
-            }
+            //}
             GL.Disable(EnableCap.LineStipple);
             GL.End();
 
             // draw AB points from curve
-            if (mf.font.isFontOn)
+            if ((mf.font.isFontOn) && (mf.trk.gArr[mf.trk.idx].curvePts.Count > 4))
             {
                 GL.Color3(0.40f, 0.90f, 0.95f);
                 mf.font.DrawText3D(mf.trk.gArr[mf.trk.idx].curvePts[0].easting, mf.trk.gArr[mf.trk.idx].curvePts[0].northing, "&A");

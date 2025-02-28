@@ -128,7 +128,7 @@ namespace AgOpenGPS.Forms.Guidance
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(313, 37);
             this.label2.TabIndex = 574;
-            this.label2.Text = "Tool Antenna Setup";
+            this.label2.Text = "Track Antenna Setup";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
@@ -435,7 +435,6 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             // btnSlideRoll
             // 
-            this.btnSlideRoll.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnSlideRoll.BackColor = System.Drawing.Color.Transparent;
             this.btnSlideRoll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnSlideRoll.FlatAppearance.BorderColor = System.Drawing.SystemColors.HotTrack;

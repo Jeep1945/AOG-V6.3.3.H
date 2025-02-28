@@ -56,7 +56,7 @@ namespace AgOpenGPS.Forms.Guidance
             if (mf.trk.idx < 0)
             {
                 mf.TimedMessageBox(3000, "  No AB line active    ", "   get one ");
-                //Close();
+                Close();
             }
 
             ToolLookahead = Properties.Settings.Default.setTool_ToolLookahead;
@@ -218,7 +218,6 @@ namespace AgOpenGPS.Forms.Guidance
             Close();
         }
 
-
         private void ToolAtWork()
         {
             FindToolTrackXTE();
@@ -263,7 +262,7 @@ namespace AgOpenGPS.Forms.Guidance
             }
             else
             {
-                btnSetupopenclose1_Click();
+                if (!isScreenbig) btnSetupopenclose1_Click();
                 mf.TimedMessageBox(3000, "      Record ", "Tool or Slope");
             }
         }
@@ -427,49 +426,51 @@ namespace AgOpenGPS.Forms.Guidance
                 {
                     double Pointdiff = 0;
 
-                    vec3 ContourPointsABSlope = new vec3(mf.trk.gArr[mf.trk.idx].ptA.easting, mf.trk.gArr[mf.trk.idx].ptB.northing, mf.trk.gArr[mf.trk.idx].heading);
 
                     mf.tooltrk.gToolArr.Add(new CToolTrk());
                     mf.ct.ContourLineList.Add(new List<vec3>());
 
                     if (mf.trk.gArr[mf.trk.idx].mode == (int)TrackMode.AB)
                     {
-                        double A1A2Distance = 0;
+                        vec3 ContourPointsABSlope = new vec3(mf.trk.gArr[mf.trk.idx].ptA.easting, mf.trk.gArr[mf.trk.idx].ptA.northing, mf.trk.gArr[mf.trk.idx].heading);
+
+                        double A1A2Distance;
 
                         A1A2Distance = glm.Distance(mf.trk.gArr[mf.trk.idx].ptA, mf.trk.gArr[mf.trk.idx].ptB);
 
                         while (Pointdiff < A1A2Distance)  // make lines between Crossingpoints A1-A2 and B1-B2
                         {
-                            Pointdiff += 1.3;
-                            ContourPointsABSlope.easting += (Math.Sin(mf.trk.gArr[mf.trk.idx].heading) * 1.3);
-                            ContourPointsABSlope.northing += (Math.Cos(mf.trk.gArr[mf.trk.idx].heading) * 1.3);
+                            Pointdiff += 1;
+                            ContourPointsABSlope.easting += (Math.Sin(mf.trk.gArr[mf.trk.idx].heading) * 1.0);
+                            ContourPointsABSlope.northing += (Math.Cos(mf.trk.gArr[mf.trk.idx].heading) * 1.0);
                             ContourPointsABSlope.heading = mf.trk.gArr[mf.trk.idx].heading;
                             mf.ct.ContourLineList[0].Add(ContourPointsABSlope);
                         }
 
                         mf.tooltrk.gToolArr[0].ToolHeading = mf.trk.gArr[mf.trk.idx].heading;
                         mf.tooltrk.gToolArr[0].nameAB = mf.trk.gArr[mf.trk.idx].name;
-                        mf.tooltrk.gToolArr[0].countAB = 0;
-                        mf.tooltrk.gToolArr[0].ToolOffset = 0; // (int)nudSetOfset;
+                        mf.tooltrk.gToolArr[0].countAB = 1;
+                        mf.tooltrk.gToolArr[0].ToolOffset = 0;
+                        mf.tooltrk.gToolArr[0].mode = 4;
                     }
                     else
                     {
                         mf.tooltrk.gToolArr[0].ToolHeading = mf.trk.gArr[mf.trk.idx].heading;
                         mf.tooltrk.gToolArr[0].nameAB = mf.trk.gArr[mf.trk.idx].name;
-                        mf.tooltrk.gToolArr[0].countAB = 0;
+                        mf.tooltrk.gToolArr[0].countAB = 1;
                         mf.tooltrk.gToolArr[0].ToolOffset = 0; // (int)nudSetOfset;
+                        mf.tooltrk.gToolArr[0].mode = 2;
                     }
 
-                    vecRoll Slopebeginn = new vecRoll(0, 0, 0, 0);
-                    vec3 SlopeCountur = new vec3(0, 0, 0);
-
+                    // convert origin curve into 1.slope 
                     for (int islope = 1; islope < mf.trk.gArr[mf.trk.idx].curvePts.Count; islope++)
                     {
-                        Slopebeginn = new vecRoll(mf.trk.gArr[mf.trk.idx].curvePts[islope].easting, mf.trk.gArr[mf.trk.idx].curvePts[islope].northing, mf.trk.gArr[mf.trk.idx].curvePts[islope].heading, RollToolVeh);
-                        SlopeCountur = new vec3(mf.trk.gArr[mf.trk.idx].curvePts[islope].easting, mf.trk.gArr[mf.trk.idx].curvePts[islope].northing, mf.trk.gArr[mf.trk.idx].curvePts[islope].heading);
+                        vecRoll Slopebeginn = new vecRoll(mf.trk.gArr[mf.trk.idx].curvePts[islope].easting, mf.trk.gArr[mf.trk.idx].curvePts[islope].northing, mf.trk.gArr[mf.trk.idx].curvePts[islope].heading, RollToolVeh);
+                        vec3 SlopeContour = new vec3(mf.trk.gArr[mf.trk.idx].curvePts[islope].easting, mf.trk.gArr[mf.trk.idx].curvePts[islope].northing, mf.trk.gArr[mf.trk.idx].curvePts[islope].heading);
                         mf.tooltrk.gToolArr[1].curve_Toolpivot_Pts.Add(Slopebeginn);
-                        mf.ct.ContourLineList[1].Add(SlopeCountur);
+                        mf.ct.ContourLineList[1].Add(SlopeContour);
                     }
+                    mf.FileDeletePatternTracks();
 
                     mf.trk.gArr.Add(new CTrk());
                     mf.trk.gArr[mf.trk.gArr.Count - 1].name = ("&Pa " + 1);
@@ -477,30 +478,35 @@ namespace AgOpenGPS.Forms.Guidance
                     mf.trk.gArr[mf.trk.gArr.Count - 1].curvePts = mf.ct.ContourLineList[0];
                     mf.FileSaveTracks();
 
-                    mf.trk.idx++;
+                    for (int iidx = 0; iidx < mf.trk.gArr.Count - 1; iidx++)
+                    {
+                        if (mf.trk.gArr[iidx].name.Length > 3 && mf.trk.gArr[iidx].name.Substring(0, 4) == "&Pa ")
+                        {
+                            mf.trk.idx = iidx;
+                        }
+                    }
+
                     mf.curve.DrawContourPatternCurve();
                 }
                 else
                 {
-                    vecRoll Slopebeginn = new vecRoll(0, 0, 0, 0);
-                    vec3 SlopeCountur = new vec3(0, 0, 0);
-
                     SelectedTrackidx = mf.tooltrk.gToolArr.Count - 1;
                     double minDistance = mf.avgSpeed * 0.1;  // distance of points in the new curve in m
-                    double distance = glm.Distance(mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count - 1], PivotToolSlopeLine);  // last point to 3. antennapoint
+                    double distance = 0;
+
+                    if (mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count > 0)
+                        distance = glm.Distance(mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts[mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Count], PivotToolSlopeLine);  // last point to 3. antennapoint
 
                     if (distance > minDistance)
                     {
-                        Slopebeginn = new vecRoll(PivotToolSlopeLine.easting, PivotToolSlopeLine.northing, mf.pivotAxlePos.heading, RollToolVeh);
-                        SlopeCountur = new vec3(PivotToolSlopeLine.easting, PivotToolSlopeLine.northing, mf.pivotAxlePos.heading);
+                        vecRoll Slopebeginn = new vecRoll(PivotToolSlopeLine.easting, PivotToolSlopeLine.northing, mf.pivotAxlePos.heading, RollToolVeh);
+                        vec3 SlopeContour = new vec3(PivotToolSlopeLine.easting, PivotToolSlopeLine.northing, mf.pivotAxlePos.heading);
                         mf.tooltrk.gToolArr[SelectedTrackidx].curve_Toolpivot_Pts.Add(Slopebeginn);
-                        mf.ct.ContourLineList[SelectedTrackidx].Add(SlopeCountur);
+                        mf.ct.ContourLineList[SelectedTrackidx].Add(SlopeContour);
                     }
-
+                    mf.curve.DrawContourPatternCurve();
                 }
             }
-
-            mf.curve.DrawContourPatternCurve();
 
 
         }
