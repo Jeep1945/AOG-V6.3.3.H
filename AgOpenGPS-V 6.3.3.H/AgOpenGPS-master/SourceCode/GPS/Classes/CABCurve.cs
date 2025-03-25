@@ -299,6 +299,8 @@ namespace AgOpenGPS
                         //find the closest 2 points to current close call
                         for (int jLine = ccPaLineA; jLine < ddPaLineA; jLine++)
                         {
+                            if (mf.ct.ContourLineList[jLine].Count < 2)
+                                return;
                             if (ddPa >= mf.ct.ContourLineList[jLine].Count) ddPa = mf.ct.ContourLineList[jLine].Count - 1;
 
                             for (int j = ccPa; j < ddPa; j++)
@@ -1187,11 +1189,41 @@ namespace AgOpenGPS
             }
         }
 
+        public void DrawSlope()
+        {
+
+            GL.LineWidth(3);     // 
+            GL.Color3(1.0f, 0.0f, 1.0f);   // violett  driving line
+            GL.Begin(PrimitiveType.LineStrip);
+            for (int iPoint = 0; iPoint < mf.trk.gArr[mf.trk.gArr.Count - 1].curvePts.Count; iPoint++)
+            {
+                GL.Vertex3(mf.trk.gArr[mf.trk.gArr.Count - 1].curvePts[iPoint].easting, mf.trk.gArr[mf.trk.gArr.Count - 1].curvePts[iPoint].northing, 0);
+            }
+            GL.Disable(EnableCap.LineStipple);
+            GL.End();
+
+            GL.LineWidth(2);
+            GL.Color3(0.96, 0.2f, 0.2f);   // red   activ AB curve
+            GL.Begin(PrimitiveType.LineStrip);
+
+            if (mf.tooltrk.gToolArr.Count > 1)
+            {
+                for (int h = 0; h < mf.tooltrk.gToolArr.Count - 1; h++)
+                {
+                    for (int jh = 0; jh < mf.tooltrk.gToolArr[h].curve_Toolpivot_Pts.Count; jh++)
+                    {
+                        // GL.Vertex3(mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curve_Toolpivot_Pts[jh].easting, mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curve_Toolpivot_Pts[jh].northing, 0);
+                    }
+                }
+            }
+            GL.End();
+        }
+
         public void DrawContourPatternCurve()
         {
             int Minline = mf.GuidanceLine9, Maxline = mf.GuidanceLine9;
             int ptCount = mf.trk.gArr[mf.trk.idx].curvePts.Count;
-            int ptCountPa, miCL = 4;
+            //int ptCountPa, miCL = 4;
             // draws the violett AB buildline
             GL.End();
             GL.LineWidth(1);
@@ -1258,10 +1290,10 @@ namespace AgOpenGPS
             //ptCountPa = mf.ct.ContourLineList[miCL].Count;
             //for (int h = 0; h < ptCountPa - 1; h += 10)
             //{
-                // draw heading of linepoints
-                //mf.font.DrawText3D(mf.ct.ContourLineList[howManyPathsAwayiCL][h].easting, mf.ct.ContourLineList[howManyPathsAwayiCL][h].northing, (mf.ct.ContourLineList[howManyPathsAwayiCL][h].heading).ToString("0.####"));//  h.ToString());
-                // draw numbers of linepoints
-                // mf.font.DrawText3D(mf.ct.ContourLineList[miCL][h].easting, mf.ct.ContourLineList[miCL][h].northing, h.ToString());
+            // draw heading of linepoints
+            //mf.font.DrawText3D(mf.ct.ContourLineList[howManyPathsAwayiCL][h].easting, mf.ct.ContourLineList[howManyPathsAwayiCL][h].northing, (mf.ct.ContourLineList[howManyPathsAwayiCL][h].heading).ToString("0.####"));//  h.ToString());
+            // draw numbers of linepoints
+            // mf.font.DrawText3D(mf.ct.ContourLineList[miCL][h].easting, mf.ct.ContourLineList[miCL][h].northing, h.ToString());
             //}
             GL.Disable(EnableCap.LineStipple);
             GL.End();

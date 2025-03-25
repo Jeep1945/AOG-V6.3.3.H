@@ -1301,6 +1301,11 @@ namespace AgOpenGPS
 
         }
 
+        private void lblGoneDisdance_Click(object sender, EventArgs e)
+        {
+            fd.distanceUser = 0;
+        }
+
         private void toolStripBtnFieldTools_Click_1(object sender, EventArgs e)
         {
 
@@ -1591,6 +1596,7 @@ namespace AgOpenGPS
                 {
                     lblDistancetoBoundary.Text = ("Dist to fence : " + DistancetoBoundary.ToString("0.00") + "m ");
                     lblDistancefromBoundary.Text = ("Dist from fence : " + DistancefromBoundary.ToString("0.00") + "m ");
+                    lblGoneDisdance.Text = ("Gone Dist : " + fd.DistanceUserMeters + "m ");
                 }
                 else
                 {
@@ -1598,6 +1604,7 @@ namespace AgOpenGPS
                     DistancefromBoundary *= 2.47105;
                     lblDistancetoBoundary.Text = ("Dist to fence : " + DistancetoBoundary.ToString("0.00") + "ft ");
                     lblDistancefromBoundary.Text = ("Dist from fence : " + DistancefromBoundary.ToString("0.00") + "ft ");
+                    lblGoneDisdance.Text = ("Gone Dist : " + fd.DistanceUserMeters + "ft ");
                 }
 
             }
@@ -1641,7 +1648,7 @@ namespace AgOpenGPS
 
         private void lblDistancetoBoundary_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void lblDistancefromBoundary_Click(object sender, EventArgs e)

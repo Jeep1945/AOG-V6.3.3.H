@@ -55,22 +55,24 @@ namespace AgOpenGPS.Forms.Guidance
             this.rbtnToolAntennaRight = new System.Windows.Forms.RadioButton();
             this.rbtnToolAntennaLeft = new System.Windows.Forms.RadioButton();
             this.nudSetToolOffset = new AgOpenGPS.NudlessNumericUpDown();
-            this.nudSetToolAntHight = new AgOpenGPS.NudlessNumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.nudToolbehindPivot = new AgOpenGPS.NudlessNumericUpDown();
             this.btnSlideRoll = new System.Windows.Forms.Button();
             this.btnThirdAntenna = new System.Windows.Forms.Button();
+            this.btnSlopeDirection = new System.Windows.Forms.Button();
+            this.btnAddnewSlope = new System.Windows.Forms.Button();
+            this.nudSetToolAntHight1 = new AgOpenGPS.NudlessNumericUpDown();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudSetToolOffset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSetToolAntHight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudToolbehindPivot)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSetToolAntHight1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnToolTrackDelete
             // 
             this.btnToolTrackDelete.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
             this.btnToolTrackDelete.Image = global::AgOpenGPS.Properties.Resources.ABTrackCurveDelete;
-            this.btnToolTrackDelete.Location = new System.Drawing.Point(10, 166);
+            this.btnToolTrackDelete.Location = new System.Drawing.Point(10, 224);
             this.btnToolTrackDelete.Name = "btnToolTrackDelete";
             this.btnToolTrackDelete.Size = new System.Drawing.Size(70, 70);
             this.btnToolTrackDelete.TabIndex = 3;
@@ -79,8 +81,8 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             // btnExit
             // 
-            this.btnExit.Image = global::AgOpenGPS.Properties.Resources.Cancel64;
-            this.btnExit.Location = new System.Drawing.Point(12, 259);
+            this.btnExit.Image = global::AgOpenGPS.Properties.Resources.FileSave;
+            this.btnExit.Location = new System.Drawing.Point(12, 299);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(70, 70);
             this.btnExit.TabIndex = 2;
@@ -101,7 +103,7 @@ namespace AgOpenGPS.Forms.Guidance
             // 
             this.btnToolAtWork.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
             this.btnToolAtWork.Image = global::AgOpenGPS.Properties.Resources.AutoSteerOff;
-            this.btnToolAtWork.Location = new System.Drawing.Point(11, 344);
+            this.btnToolAtWork.Location = new System.Drawing.Point(11, 369);
             this.btnToolAtWork.Name = "btnToolAtWork";
             this.btnToolAtWork.Size = new System.Drawing.Size(70, 70);
             this.btnToolAtWork.TabIndex = 4;
@@ -145,7 +147,7 @@ namespace AgOpenGPS.Forms.Guidance
             this.btnleaveMenue.Font = new System.Drawing.Font("Tahoma", 14.25F);
             this.btnleaveMenue.Image = global::AgOpenGPS.Properties.Resources.SwitchOff;
             this.btnleaveMenue.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnleaveMenue.Location = new System.Drawing.Point(12, 435);
+            this.btnleaveMenue.Location = new System.Drawing.Point(11, 441);
             this.btnleaveMenue.Name = "btnleaveMenue";
             this.btnleaveMenue.Size = new System.Drawing.Size(70, 70);
             this.btnleaveMenue.TabIndex = 577;
@@ -385,24 +387,6 @@ namespace AgOpenGPS.Forms.Guidance
             this.nudSetToolOffset.ValueChanged += new System.EventHandler(this.nudSetToolOffset_ValueChanged);
             this.nudSetToolOffset.Click += new System.EventHandler(this.nudSetToolOffset_Click);
             // 
-            // nudSetToolAntHight
-            // 
-            this.nudSetToolAntHight.BackColor = System.Drawing.Color.White;
-            this.nudSetToolAntHight.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
-            this.nudSetToolAntHight.Location = new System.Drawing.Point(315, 192);
-            this.nudSetToolAntHight.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.nudSetToolAntHight.Name = "nudSetToolAntHight";
-            this.nudSetToolAntHight.ReadOnly = true;
-            this.nudSetToolAntHight.Size = new System.Drawing.Size(98, 33);
-            this.nudSetToolAntHight.TabIndex = 465;
-            this.nudSetToolAntHight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nudSetToolAntHight.ValueChanged += new System.EventHandler(this.nudSetToolAntHight_ValueChanged);
-            this.nudSetToolAntHight.Click += new System.EventHandler(this.nudSetToolAntHight_Click);
-            // 
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -443,9 +427,9 @@ namespace AgOpenGPS.Forms.Guidance
             this.btnSlideRoll.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSlideRoll.Image = global::AgOpenGPS.Properties.Resources.RollSlidehill_off;
             this.btnSlideRoll.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSlideRoll.Location = new System.Drawing.Point(315, 54);
+            this.btnSlideRoll.Location = new System.Drawing.Point(162, 76);
             this.btnSlideRoll.Name = "btnSlideRoll";
-            this.btnSlideRoll.Size = new System.Drawing.Size(93, 69);
+            this.btnSlideRoll.Size = new System.Drawing.Size(93, 61);
             this.btnSlideRoll.TabIndex = 601;
             this.btnSlideRoll.Text = "Slope";
             this.btnSlideRoll.UseVisualStyleBackColor = false;
@@ -462,7 +446,7 @@ namespace AgOpenGPS.Forms.Guidance
             this.btnThirdAntenna.Image = global::AgOpenGPS.Properties.Resources.AntennaNoOffset;
             this.btnThirdAntenna.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnThirdAntenna.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnThirdAntenna.Location = new System.Drawing.Point(162, 54);
+            this.btnThirdAntenna.Location = new System.Drawing.Point(315, 68);
             this.btnThirdAntenna.Name = "btnThirdAntenna";
             this.btnThirdAntenna.Size = new System.Drawing.Size(93, 69);
             this.btnThirdAntenna.TabIndex = 602;
@@ -470,6 +454,59 @@ namespace AgOpenGPS.Forms.Guidance
             this.btnThirdAntenna.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnThirdAntenna.UseVisualStyleBackColor = false;
             this.btnThirdAntenna.Click += new System.EventHandler(this.btnThirdAntenna_Click);
+            // 
+            // btnSlopeDirection
+            // 
+            this.btnSlopeDirection.BackColor = System.Drawing.Color.Chartreuse;
+            this.btnSlopeDirection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnSlopeDirection.FlatAppearance.BorderColor = System.Drawing.Color.DarkOrange;
+            this.btnSlopeDirection.FlatAppearance.BorderSize = 0;
+            this.btnSlopeDirection.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnSlopeDirection.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnSlopeDirection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSlopeDirection.Font = new System.Drawing.Font("Tahoma", 14.25F);
+            this.btnSlopeDirection.Image = global::AgOpenGPS.Properties.Resources.ArrowRight;
+            this.btnSlopeDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnSlopeDirection.Location = new System.Drawing.Point(163, 39);
+            this.btnSlopeDirection.Name = "btnSlopeDirection";
+            this.btnSlopeDirection.Size = new System.Drawing.Size(92, 31);
+            this.btnSlopeDirection.TabIndex = 603;
+            this.btnSlopeDirection.UseVisualStyleBackColor = false;
+            this.btnSlopeDirection.Click += new System.EventHandler(this.btnSlopeDirection_Click);
+            // 
+            // btnAddnewSlope
+            // 
+            this.btnAddnewSlope.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+            this.btnAddnewSlope.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddnewSlope.ForeColor = System.Drawing.Color.Blue;
+            this.btnAddnewSlope.Image = global::AgOpenGPS.Properties.Resources.AddNew;
+            this.btnAddnewSlope.Location = new System.Drawing.Point(12, 151);
+            this.btnAddnewSlope.Name = "btnAddnewSlope";
+            this.btnAddnewSlope.Size = new System.Drawing.Size(70, 70);
+            this.btnAddnewSlope.TabIndex = 604;
+            this.btnAddnewSlope.Text = "Slope";
+            this.btnAddnewSlope.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnAddnewSlope.UseVisualStyleBackColor = false;
+            this.btnAddnewSlope.Visible = false;
+            this.btnAddnewSlope.Click += new System.EventHandler(this.btnAddnewSlope_Click);
+            // 
+            // nudSetToolAntHight1
+            // 
+            this.nudSetToolAntHight1.BackColor = System.Drawing.Color.White;
+            this.nudSetToolAntHight1.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
+            this.nudSetToolAntHight1.Location = new System.Drawing.Point(315, 192);
+            this.nudSetToolAntHight1.Maximum = new decimal(new int[] {
+            5000,
+            0,
+            0,
+            0});
+            this.nudSetToolAntHight1.Name = "nudSetToolAntHight1";
+            this.nudSetToolAntHight1.ReadOnly = true;
+            this.nudSetToolAntHight1.Size = new System.Drawing.Size(98, 33);
+            this.nudSetToolAntHight1.TabIndex = 605;
+            this.nudSetToolAntHight1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nudSetToolAntHight1.ValueChanged += new System.EventHandler(this.nudSetToolAntHight1_ValueChanged);
+            this.nudSetToolAntHight1.Click += new System.EventHandler(this.nudSetToolAntHight1_Click);
             // 
             // FormToolTracks
             // 
@@ -480,6 +517,9 @@ namespace AgOpenGPS.Forms.Guidance
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(470, 511);
             this.ControlBox = false;
+            this.Controls.Add(this.nudSetToolAntHight1);
+            this.Controls.Add(this.btnAddnewSlope);
+            this.Controls.Add(this.btnSlopeDirection);
             this.Controls.Add(this.btnThirdAntenna);
             this.Controls.Add(this.btnSlideRoll);
             this.Controls.Add(this.nudToolbehindPivot);
@@ -501,7 +541,6 @@ namespace AgOpenGPS.Forms.Guidance
             this.Controls.Add(this.btnleaveMenue);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.nudSetToolAntHight);
             this.Controls.Add(this.btnToolAtWork);
             this.Controls.Add(this.btnToolTrackDelete);
             this.Controls.Add(this.btnExit);
@@ -514,8 +553,8 @@ namespace AgOpenGPS.Forms.Guidance
             this.Load += new System.EventHandler(this.FormToolTracks_Load);
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudSetToolOffset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSetToolAntHight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudToolbehindPivot)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSetToolAntHight1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -526,7 +565,7 @@ namespace AgOpenGPS.Forms.Guidance
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnToolTrackDelete;
         private System.Windows.Forms.Button btnToolAtWork;
-        private NudlessNumericUpDown nudSetToolAntHight;
+//        private NudlessNumericUpDown nudSetToolAntHight;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Timer timer1;
@@ -552,5 +591,8 @@ namespace AgOpenGPS.Forms.Guidance
         private NudlessNumericUpDown nudToolbehindPivot;
         private System.Windows.Forms.Button btnSlideRoll;
         private System.Windows.Forms.Button btnThirdAntenna;
+        private System.Windows.Forms.Button btnSlopeDirection;
+        private System.Windows.Forms.Button btnAddnewSlope;
+        private NudlessNumericUpDown nudSetToolAntHight1;
     }
 }

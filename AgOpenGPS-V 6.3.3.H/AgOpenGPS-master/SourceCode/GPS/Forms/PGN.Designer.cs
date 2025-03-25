@@ -503,7 +503,7 @@ namespace AgOpenGPS
             /// <summary>
             /// 8 bytes
             /// </summary>
-            public byte[] pgn = new byte[] { 0x80, 0x81, 0x7f, 0xD3, 2, 0, 0, 0xCC };
+            public byte[] pgn = new byte[] { 0x80, 0x81, 0x7f, 0xD1, 2, 0, 0, 0xCC };
             public int Data_Refresh = 5;
             public int Hello = 6;
             public void Reset()
@@ -574,7 +574,7 @@ namespace AgOpenGPS
     public CPGN_D2 p_210 = new CPGN_D2();
 
     /// <summary>
-    /// MPU 6050 PGN from ESP32 - 211 - D3
+    /// MPU 6050 PGN from ESP32 - 209 - D1
     /// </summary>
     public CPGN_D1 p_209 = new CPGN_D1();
     //#################################################################

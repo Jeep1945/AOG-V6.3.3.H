@@ -18,8 +18,8 @@ int IMU_MPU6050 = 1;           // 1: to 10   1: from Dual   10: from MPU
 int IMU_MPU6050_direction = 2; // Drivedirection  Y=1:  -Y=2:  X=3:  -X=4:
 int Roll_Dual_MPU = 1;         // from 1 to 10 1: from Dual   10: from MPU
 int move_line_buttons = 0;     // 0: no   1: buttons to move AB line
-int Headingfilter = 3;         // 1: no   10: most filter
-int Rollfilter = 1;            // 1: no   10: most filter
+int Headingfilter = 1;         // 1: no   10: most filter
+int Rollfilter = 5;            // 1: no   10: most filter
 
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //  ++++++++++++++++++++++++++++++++  END Setup  +++++++++++++++++++++++++++++++++++++++
@@ -35,7 +35,7 @@ int Rollfilter = 1;            // 1: no   10: most filter
 #include <EthernetUdp.h>
 #include <ESPmDNS.h>
 #include "zNMEAParser.h"
-
+#include "mpu6050_FastAngles.h"
 
 // connection plan:
 //  ESP32--- Right F9P GPS pos --- Left F9P Heading-----Sentences
@@ -157,7 +157,7 @@ double rollnord_before = 0.0, rolleast_before = 0.0;
 double relPosD, relPosDH;
 double rollzuvor = 0;
 double PI180 = 57.295791;
-double hzuvor[10], hzuvormin, hzuvormax;
+double hzuvor[10], hzuvormin, hzuvormax, heading_MPU6050_zuvor[10];
 double Rzuvor[10];
 double headingcorrectur = 0, rollcorrectur = 0;
 double baseline, baseline1, baselineHorizontal;
@@ -225,6 +225,8 @@ String checksum = "";
 
 // MPU6050
 String RollHeading = "";
+double heading_MPU6050_hzuvormin = 360;
+double heading_MPU6050_hzuvormax = 0, heading_MPU6050_corridor;
 int move_ABline = 0, heading_source = 0;
 float roll_MPU6050 = 0, heading_MPU6050 = 0, roll1, roll2;
 float roll_MPU6050_diff = 0, heading_MPU6050_diff = 0, heading_MPU6050_offset = 0, heading_MPU6050_drift = 0;

@@ -1013,6 +1013,25 @@ namespace AgOpenGPS
             trk.idx = -1;
         }
 
+        public void FileDeleteSlopeTracks()
+        {
+            string nam;
+
+            for (int iPa = 0; iPa < trk.gArr.Count; iPa++)
+            {
+                nam = trk.gArr[iPa].name;
+
+                if (nam.Length > 7 && nam.Substring(0, 8) == "&FIX ")
+                {
+                    trk.gArr.RemoveAt(iPa);
+                    iPa = 0;
+                }
+            }
+            trk.idx = trk.gArr.Count - 1;
+            btnBuildTracks_small.Image = Properties.Resources.Splitlines;
+            FileSaveTracks();
+        }
+
         public void FileDeletePatternTracks()
         {
             string nam;
