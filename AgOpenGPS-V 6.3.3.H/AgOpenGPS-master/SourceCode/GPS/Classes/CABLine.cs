@@ -526,7 +526,7 @@ namespace AgOpenGPS
                             GL.Vertex3((cosHeading * (-toolWidth + toolOffset)) + currentLinePtA.easting, (sinHeading * (-toolWidth + toolOffset)) + currentLinePtA.northing, 0);
                             GL.Vertex3((cosHeading * (-toolWidth + toolOffset)) + currentLinePtB.easting, (sinHeading * (-toolWidth + toolOffset)) + currentLinePtB.northing, 0);
 
-                            for (tools = 1; tools < mf.GuidanceLine9; tools++)
+                            for (tools = 2; tools < mf.GuidanceLine9; tools++)
                             {
                                 toolWidth = toolWidthline * tools;
                                 GL.Vertex3((cosHeading * toolWidth) + currentLinePtA.easting, (sinHeading * toolWidth) + currentLinePtA.northing, 0);
@@ -548,7 +548,7 @@ namespace AgOpenGPS
                             GL.Vertex3((cosHeading * (-toolWidth - toolOffset)) + currentLinePtA.easting, (sinHeading * (-toolWidth - toolOffset)) + currentLinePtA.northing, 0);
                             GL.Vertex3((cosHeading * (-toolWidth - toolOffset)) + currentLinePtB.easting, (sinHeading * (-toolWidth - toolOffset)) + currentLinePtB.northing, 0);
 
-                            for (tools = 1; tools < mf.GuidanceLine9; tools++)
+                            for (tools = 2; tools < mf.GuidanceLine9; tools++)
                             {
                                 toolWidth = toolWidthline * tools;
                                 GL.Vertex3((cosHeading * toolWidth) + currentLinePtA.easting, (sinHeading * toolWidth) + currentLinePtA.northing, 0);

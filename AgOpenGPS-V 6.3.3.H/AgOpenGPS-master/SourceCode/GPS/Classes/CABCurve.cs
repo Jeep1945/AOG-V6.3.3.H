@@ -1212,7 +1212,7 @@ namespace AgOpenGPS
                 {
                     for (int jh = 0; jh < mf.tooltrk.gToolArr[h].curve_Toolpivot_Pts.Count; jh++)
                     {
-                        // GL.Vertex3(mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curve_Toolpivot_Pts[jh].easting, mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curve_Toolpivot_Pts[jh].northing, 0);
+                         GL.Vertex3(mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curve_Toolpivot_Pts[jh].easting, mf.tooltrk.gToolArr[mf.tooltrk.gToolArr.Count - 1].curve_Toolpivot_Pts[jh].northing, 0);
                     }
                 }
             }

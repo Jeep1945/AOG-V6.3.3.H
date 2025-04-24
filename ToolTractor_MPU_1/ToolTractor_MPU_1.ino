@@ -221,7 +221,7 @@ byte ReplyBufferMPUData[100] = "";
 uint8_t PGN_209[] = { 0x80, 0x81, 0x7f, 0xD1, 2, 0, 0, 0xCC};
 int8_t PGN_209_Size = sizeof(PGN_209) - 1;
 byte ReplyBufferMPUData_Refresh[3] = "";
-int isData_Refresh = 1;
+int isData_Refresh = 0;
 
 // Heading
 float heading, heading1, heading2, headingUBX, headingzuvor = 0;

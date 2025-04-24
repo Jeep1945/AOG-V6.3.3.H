@@ -18,7 +18,7 @@ namespace AgOpenGPS.Forms.Guidance
 
         private bool isScreenbig = false, isSlopeDirectionLeft = true;
         private bool isToolTrackexist = false, isHeadingToolSameWay = true;
-        private bool isSimulatorOn = false;
+        private bool isSimulatorOn = true;
 
         private double Tooleasting;
         private double Toolnorthing;
@@ -1039,10 +1039,10 @@ namespace AgOpenGPS.Forms.Guidance
         {
             RollToolVeh = mf.ahrs.imuRoll;
             Calculate_All_Lines();
-            mf.curve.DrawSlope();
 
             if ((mf.isBtnAutoSteerOn) && (!mf.isSlopeline))
             {
+                //mf.curve.DrawToolCurve();
 
                 if (mf.tooltrk.isbtnAddToolTrackPts)
                 {
@@ -1055,8 +1055,10 @@ namespace AgOpenGPS.Forms.Guidance
             }
 
             if ((mf.tooltrk.gToolArr.Count > 0) && (!mf.isThirdAntenne) && (mf.isBtnAutoSteerOn))
+            {
                 CreateAddRollinline();
-
+                mf.curve.DrawSlope();
+            }
         }
     }
 }

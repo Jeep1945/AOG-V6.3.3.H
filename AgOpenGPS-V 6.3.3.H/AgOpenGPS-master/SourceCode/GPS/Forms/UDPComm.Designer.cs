@@ -283,7 +283,8 @@ namespace AgOpenGPS
                             LatTool += temp;
                             if (LatTool < 0)
                                 NothSouth = "S";
-                            decim = 2;
+                            decim = 3;
+                            if (LongTool < 100) decim = 2;
                             if (LongTool < 10) decim = 1;
                             double.TryParse(LongToolString.Substring(0, decim), NumberStyles.Float, CultureInfo.InvariantCulture, out LongTool);
                             double.TryParse(LongToolString.Substring(decim), NumberStyles.Float, CultureInfo.InvariantCulture, out double temp1);
