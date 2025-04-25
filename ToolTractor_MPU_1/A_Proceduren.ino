@@ -4,7 +4,7 @@ void  Coordinaten_check() {
 
 
   if (GGAnord.substring(4, 5) == ".") {  // Data from GGA
-    if (((abs(nordWinkel - rollnord_before) > 1) || (abs(fixnorddeci - fixnorddeci_before) > 0.0005)) && (Coodinate1_check2 < 4)) {  // Data from GGA only degrees
+    if (((abs(nordWinkel - rollnord_before) > 1) || (abs(fixnorddeci - fixnorddeci_before) > 0.00005)) && (Coodinate1_check2 < 4)) {  // Data from GGA only degrees
       Paogi_true_UBX = false;
       Coodinate1_check2++;
       //Serial.println("  Hallo1  ");
@@ -22,7 +22,7 @@ void  Coordinaten_check() {
   }
 
   if (GGAeast.substring(5, 6) == ".") {  // Data from GGA
-    if (((abs(eastWinkel - rolleast_before) > 1) || (abs(fixeastdeci - fixeastdeci_before) > 0.0005)) && (Coodinate1_check1 < 4)) {
+    if (((abs(eastWinkel - rolleast_before) > 1) || (abs(fixeastdeci - fixeastdeci_before) > 0.00005)) && (Coodinate1_check1 < 4)) {
       Paogi_true_UBX = false;
       Coodinate1_check1++;
     }
