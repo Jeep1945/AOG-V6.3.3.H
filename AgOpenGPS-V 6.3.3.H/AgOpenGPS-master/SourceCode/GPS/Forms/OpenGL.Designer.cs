@@ -69,7 +69,7 @@ namespace AgOpenGPS
         private void oglMain_Paint(object sender, PaintEventArgs e)
         {
             if (sentenceCounter < 299)
-            { 
+            {
                 if (isGPSPositionInitialized)
                 {
                     oglMain.MakeCurrent();
@@ -127,6 +127,33 @@ namespace AgOpenGPS
                             if (camera.camSetDistance < -5000) mipmap = 16;
 
                             //for every new chunk of patch
+                            //##################################################
+                            foreach (var triList in triStripSC[0].patchList)
+                            {
+                                int count2 = triList.Count;
+                                GL.Begin(PrimitiveType.TriangleStrip);
+
+                                GL.Color4((byte)triList[0].easting, (byte)triList[0].northing, (byte)triList[0].heading, (byte)152);
+                                //else GL.Color4((byte)triList[0].easting, (byte)triList[0].northing, (byte)triList[0].heading, (byte)(152 * 0.5));
+
+                                //if large enough patch and camera zoomed out, fake mipmap the patches, skip triangles
+                                if (count2 >= (mipmap + 2))
+                                {
+
+                                    int step = mipmap;
+                                    for (int i = 1; i < count2; i += step)
+                                    {
+                                       // GL.Vertex3(triList[i].easting, triList[i].northing, 0); i++;
+                                        //GL.Vertex3(triList[i].easting, triList[i].northing, 0); i++;
+                                        if (count2 - i <= (mipmap + 2)) step = 0;//too small to mipmap it
+                                    }
+                                }
+                                else { for (int i = 1; i < count2; i++) GL.Vertex3(triList[i].easting, triList[i].northing, 0); }
+                                GL.End();
+
+                            }
+                            //#######################################################
+
                             foreach (var triList in triStrip[j].patchList)
                             {
                                 isDraw = false;
@@ -166,6 +193,7 @@ namespace AgOpenGPS
                                     //if large enough patch and camera zoomed out, fake mipmap the patches, skip triangles
                                     if (count2 >= (mipmap + 2))
                                     {
+
                                         int step = mipmap;
                                         for (int i = 1; i < count2; i += step)
                                         {
@@ -291,6 +319,7 @@ namespace AgOpenGPS
                                 //antenna
                                 GL.Vertex3(triStrip[j].patchList[patchCount - 1][last - 2].easting, triStrip[j].patchList[patchCount - 1][last - 2].northing, 0);
                                 GL.Vertex3(triStrip[j].patchList[patchCount - 1][last - 1].easting, triStrip[j].patchList[patchCount - 1][last - 1].northing, 0);
+
                                 GL.End();
                             }
                         }
@@ -2261,7 +2290,7 @@ namespace AgOpenGPS
         }
 
         private double avgPivDistance, lightbarDistance;
- 
+
         private void DrawLightBarText()
         {
             GL.Disable(EnableCap.DepthTest);

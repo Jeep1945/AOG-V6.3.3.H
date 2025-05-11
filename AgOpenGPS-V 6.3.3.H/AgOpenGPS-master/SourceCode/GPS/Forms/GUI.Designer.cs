@@ -128,7 +128,7 @@ namespace AgOpenGPS
                 if (panelNavigation.Visible)
                     lblHz.Text = gpsHz.ToString("N1") + " ~ " + (frameTime.ToString("N1")) + " " + FixQuality;
 
-                lblFix.Text = FixQuality + pn.age.ToString("N1");
+                lblFix.Text = FixQuality + "Age: " + pn.age.ToString("N1");
                 lblCurveLineName.Text = "";
                 (fd.areaBoundaryOuterLessInner * glm.m2ha).ToString(fd.AreaBoundaryLessInnersHectares); //  ##########"N2";
 

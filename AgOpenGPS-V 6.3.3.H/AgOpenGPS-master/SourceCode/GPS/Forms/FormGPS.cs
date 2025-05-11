@@ -130,7 +130,7 @@ namespace AgOpenGPS
 
 
         //isGPSData form up
-        public bool isGPSSentencesOn = false, isKeepOffsetsOn = false;
+        public bool isGPSSentencesOn = false, isKeepOffsetsOn = false, lblGoneDisdanceClick = false;
 
         public double uturnFromBoundaryA, uturnFromBoundaryB;
         public double nudgeDistanceA, nudgeDistanceB;
@@ -1301,6 +1301,11 @@ namespace AgOpenGPS
 
         }
 
+        private void lblGone_Click(object sender, EventArgs e)
+        {
+            lblGoneDisdanceClick = !lblGoneDisdanceClick;
+        }
+
         private void lblGoneDisdance_Click(object sender, EventArgs e)
         {
             fd.distanceUser = 0;
@@ -1345,8 +1350,7 @@ namespace AgOpenGPS
         private void lblCurveLineName_Click(object sender, EventArgs e)
         {
             if (trk.idx > -1)
-                return;
-            //SC_MarkLinebyHand();
+                SC_MarkLinebyHand();
             else
             {
                 TimedMessageBox(3000, "choose a line  ", "  first ");
@@ -1594,17 +1598,39 @@ namespace AgOpenGPS
 
                 if (isMetric)
                 {
-                    lblDistancetoBoundary.Text = ("Dist to fence : " + DistancetoBoundary.ToString("0.00") + "m ");
-                    lblDistancefromBoundary.Text = ("Dist from fence : " + DistancefromBoundary.ToString("0.00") + "m ");
-                    lblGoneDisdance.Text = ("Gone Dist : " + fd.DistanceUserMeters + "m ");
+                    lblDistancetoBoundary.Text = ("Dist to fence : " + DistancetoBoundary.ToString("000.00") + "m ");
+                    lblDistancefromBoundary.Text = ("Dist from fence : " + DistancefromBoundary.ToString("000.00") + "m ");
+                    if (lblGoneDisdanceClick)
+                    {
+                        lblGone.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
+                        lblGoneDisdance.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
+                    }
+                    else
+                    {
+                        lblGoneDisdance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+                        lblGone.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+                    }
+                    lblGone.Text = ("Way");
+                    lblGoneDisdance.Text = (": " + fd.DistanceUserMeters + "m ");
                 }
                 else
                 {
                     DistancetoBoundary *= 2.47105;
                     DistancefromBoundary *= 2.47105;
-                    lblDistancetoBoundary.Text = ("Dist to fence : " + DistancetoBoundary.ToString("0.00") + "ft ");
-                    lblDistancefromBoundary.Text = ("Dist from fence : " + DistancefromBoundary.ToString("0.00") + "ft ");
-                    lblGoneDisdance.Text = ("Gone Dist : " + fd.DistanceUserMeters + "ft ");
+                    lblDistancetoBoundary.Text = ("Dist to fence : " + DistancetoBoundary.ToString("000.00") + "ft ");
+                    lblDistancefromBoundary.Text = ("Dist from fence : " + DistancefromBoundary.ToString("000.00") + "ft ");
+                    if (lblGoneDisdanceClick)
+                    {
+                        lblGone.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
+                        lblGoneDisdance.Font = new System.Drawing.Font("Tahoma", 22F, System.Drawing.FontStyle.Bold);
+                    }
+                    else
+                    {
+                        lblGoneDisdance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+                        lblGone.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+                    }
+                    lblGone.Text = ("Way");
+                    lblGoneDisdance.Text = (": " + fd.DistanceUserMeters + "ft ");
                 }
 
             }
@@ -1648,7 +1674,7 @@ namespace AgOpenGPS
 
         private void lblDistancetoBoundary_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void lblDistancefromBoundary_Click(object sender, EventArgs e)

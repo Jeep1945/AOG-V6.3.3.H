@@ -136,7 +136,7 @@ void sendGGA_WiFi() {
   if ((GGA_Send_Back_Time != 0) && ((millis() - startSend_back_Time) > (GGA_Send_Back_Time * 1000))) {  // send back GGA to Ntripserver
     ntrip_c.print(GGASatz_send_back);
     ntrip_c.print("\r\n");
-    Serial.println(GGASatz_send_back);
+    //Serial.println(GGASatz_send_back);
     startSend_back_Time = millis();
   }
 } // end sendGGA_WiFi

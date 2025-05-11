@@ -213,6 +213,7 @@
             this.lblDistancetoBoundary = new System.Windows.Forms.Label();
             this.lblDistancefromBoundary = new System.Windows.Forms.Label();
             this.lblGoneDisdance = new System.Windows.Forms.Label();
+            this.lblGone = new System.Windows.Forms.Label();
             this.contextMenuStripOpenGL.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStripFlag.SuspendLayout();
@@ -1283,7 +1284,7 @@
             this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
             this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 113F));
+            this.panelSim.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 119F));
             this.panelSim.Controls.Add(this.btnSpeedDn, 5, 0);
             this.panelSim.Controls.Add(this.btnSimSpeedUp, 7, 0);
             this.panelSim.Controls.Add(this.btnResetSim, 0, 0);
@@ -1308,7 +1309,7 @@
             this.btnSpeedDn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSpeedDn.Location = new System.Drawing.Point(404, 4);
             this.btnSpeedDn.Name = "btnSpeedDn";
-            this.btnSpeedDn.Size = new System.Drawing.Size(85, 34);
+            this.btnSpeedDn.Size = new System.Drawing.Size(82, 34);
             this.btnSpeedDn.TabIndex = 533;
             this.btnSpeedDn.UseVisualStyleBackColor = false;
             this.btnSpeedDn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnSpeedDn_MouseDown);
@@ -1321,9 +1322,9 @@
             this.btnSimSpeedUp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnSimSpeedUp.FlatAppearance.BorderSize = 0;
             this.btnSimSpeedUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSimSpeedUp.Location = new System.Drawing.Point(555, 4);
+            this.btnSimSpeedUp.Location = new System.Drawing.Point(552, 4);
             this.btnSimSpeedUp.Name = "btnSimSpeedUp";
-            this.btnSimSpeedUp.Size = new System.Drawing.Size(85, 34);
+            this.btnSimSpeedUp.Size = new System.Drawing.Size(82, 34);
             this.btnSimSpeedUp.TabIndex = 532;
             this.btnSimSpeedUp.UseVisualStyleBackColor = false;
             this.btnSimSpeedUp.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnSimSpeedUp_MouseDown);
@@ -1337,7 +1338,7 @@
             this.btnSimSetSpeedToZero.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSimSetSpeedToZero.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.btnSimSetSpeedToZero.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSimSetSpeedToZero.Location = new System.Drawing.Point(496, 4);
+            this.btnSimSetSpeedToZero.Location = new System.Drawing.Point(493, 4);
             this.btnSimSetSpeedToZero.Name = "btnSimSetSpeedToZero";
             this.btnSimSetSpeedToZero.Size = new System.Drawing.Size(52, 34);
             this.btnSimSetSpeedToZero.TabIndex = 453;
@@ -1354,7 +1355,7 @@
             this.btnSimReverseDirection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSimReverseDirection.Font = new System.Drawing.Font("Tahoma", 9.75F);
             this.btnSimReverseDirection.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnSimReverseDirection.Location = new System.Drawing.Point(683, 4);
+            this.btnSimReverseDirection.Location = new System.Drawing.Point(680, 4);
             this.btnSimReverseDirection.Name = "btnSimReverseDirection";
             this.btnSimReverseDirection.Size = new System.Drawing.Size(35, 34);
             this.btnSimReverseDirection.TabIndex = 537;
@@ -2995,7 +2996,7 @@
             this.lblDistancetoBoundary.BackColor = System.Drawing.Color.Transparent;
             this.lblDistancetoBoundary.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lblDistancetoBoundary.ForeColor = System.Drawing.Color.Lime;
-            this.lblDistancetoBoundary.Location = new System.Drawing.Point(81, 572);
+            this.lblDistancetoBoundary.Location = new System.Drawing.Point(81, 598);
             this.lblDistancetoBoundary.Name = "lblDistancetoBoundary";
             this.lblDistancetoBoundary.Size = new System.Drawing.Size(193, 19);
             this.lblDistancetoBoundary.TabIndex = 550;
@@ -3009,7 +3010,7 @@
             this.lblDistancefromBoundary.BackColor = System.Drawing.Color.Transparent;
             this.lblDistancefromBoundary.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lblDistancefromBoundary.ForeColor = System.Drawing.Color.DeepPink;
-            this.lblDistancefromBoundary.Location = new System.Drawing.Point(80, 595);
+            this.lblDistancefromBoundary.Location = new System.Drawing.Point(80, 623);
             this.lblDistancefromBoundary.Name = "lblDistancefromBoundary";
             this.lblDistancefromBoundary.Size = new System.Drawing.Size(214, 19);
             this.lblDistancefromBoundary.TabIndex = 551;
@@ -3023,12 +3024,26 @@
             this.lblGoneDisdance.BackColor = System.Drawing.Color.Transparent;
             this.lblGoneDisdance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lblGoneDisdance.ForeColor = System.Drawing.Color.DeepPink;
-            this.lblGoneDisdance.Location = new System.Drawing.Point(78, 617);
+            this.lblGoneDisdance.Location = new System.Drawing.Point(145, 550);
             this.lblGoneDisdance.Name = "lblGoneDisdance";
-            this.lblGoneDisdance.Size = new System.Drawing.Size(126, 19);
+            this.lblGoneDisdance.Size = new System.Drawing.Size(29, 19);
             this.lblGoneDisdance.TabIndex = 552;
-            this.lblGoneDisdance.Text = "Gone Distance";
+            this.lblGoneDisdance.Text = "    ";
             this.lblGoneDisdance.Click += new System.EventHandler(this.lblGoneDisdance_Click);
+            // 
+            // lblGone
+            // 
+            this.lblGone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblGone.AutoSize = true;
+            this.lblGone.BackColor = System.Drawing.Color.Transparent;
+            this.lblGone.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.lblGone.ForeColor = System.Drawing.Color.DeepPink;
+            this.lblGone.Location = new System.Drawing.Point(78, 550);
+            this.lblGone.Name = "lblGone";
+            this.lblGone.Size = new System.Drawing.Size(44, 19);
+            this.lblGone.TabIndex = 553;
+            this.lblGone.Text = "Way";
+            this.lblGone.Click += new System.EventHandler(this.lblGone_Click);
             // 
             // FormGPS
             // 
@@ -3036,6 +3051,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1196, 720);
+            this.Controls.Add(this.lblGone);
             this.Controls.Add(this.lblGoneDisdance);
             this.Controls.Add(this.lblDistancefromBoundary);
             this.Controls.Add(this.lblDistancetoBoundary);
@@ -3297,6 +3313,7 @@
         public System.Windows.Forms.Button btnBuildTracks_small1;
         private System.Windows.Forms.ToolStripMenuItem tramsMultiMenuField;
         private System.Windows.Forms.Label lblGoneDisdance;
+        private System.Windows.Forms.Label lblGone;
     }
 }
 

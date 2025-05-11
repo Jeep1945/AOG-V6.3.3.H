@@ -10,6 +10,9 @@ namespace AgOpenGPS
         //copy of the mainform address
         private readonly FormGPS mf;
 
+        public string nameAB;       // of AB line
+        public int skip_line; 
+
         //list of patch data individual triangles
         public List<vec3> triangleList = new List<vec3>();
 

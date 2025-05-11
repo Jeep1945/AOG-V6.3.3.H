@@ -32,7 +32,7 @@ int WiFi_scan_Delay = 10;      // wait to scan, for router use 50 sec delay
 
 int send_Data_Via = 1;       // 1: Ethernet
 
-int Ntriphotspot = 2;  // 0: Ntrip from AOG(by Ethernet)   1: Ntrip by Ethernet via Router
+int Ntriphotspot = 0;  // 0: Ntrip from AOG(by Ethernet)   1: Ntrip by Ethernet via Router
 //                        2: Ntrip by WiFi via Hotspot or Router
 
 //  if router exists, use 1. Network for him
@@ -631,6 +631,12 @@ void loop() {
   //  Start up WiFi connection if lost
   if ((Ntrip_WiFi) && (WiFi.status() != WL_CONNECTED)) {
     Network_built_up();
+  }
+
+   //  receive RTCM3 data by Ethernet from AOG  ##########################################
+  //   if ((send_Data_Via == 1) && (Ntriphotspot == 0)
+  if ((Ethernet_running) && (Ntriphotspot == 0)) {
+    doEthUDPNtrip();  // If RTCM3 comes in received by Ethernet from AOG
   }
 
   // If RTCM3 comes in received by Ethernet from Router ####################################

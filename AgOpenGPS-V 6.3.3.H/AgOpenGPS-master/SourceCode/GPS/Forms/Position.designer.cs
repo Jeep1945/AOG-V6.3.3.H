@@ -63,7 +63,7 @@ namespace AgOpenGPS
         public vec2 prevSectionPos = new vec2(0, 0);
         public vec2 prevContourPos = new vec2(0, 0);
         public vec2 prevGridPos = new vec2(0, 0);
-        public int patchCounter = 0;
+        public int patchCounter = 0, line_Index;
 
         public vec2 prevBoundaryPos = new vec2(0, 0);
 
@@ -102,7 +102,9 @@ namespace AgOpenGPS
 
         private double nowHz = 0, filteredDelta = 0, delta = 0;
 
-        public bool isRTK_AlarmOn, isRTK_KillAutosteer;
+
+        public bool isRTK_AlarmOn, isRTK_KillAutosteer, Line_Exist;
+        public int Line_Exist_number;
 
         public double headlandDistanceDelta = 0, boundaryDistanceDelta = 0;
 
@@ -1601,85 +1603,193 @@ namespace AgOpenGPS
 
         public void SC_MarkLinebyHand()
         {
-            int i = 1;
-            int indx = 0;  // count points of line
-            int max = 0;
-            //Console.WriteLine(ABLine.currentLinePtA.easting + " " + ABLine.currentLinePtA.northing);
+            int areaToDelete = 0, selected_area = 0;
+            bool area_delete = false;
 
-            if (trk.gArr[indx].mode == (int)TrackMode.AB)
+            if (trk.gArr[trk.idx].mode == (int)TrackMode.AB) //2 = ABLine
             {
-                //Check if new or to delete
-                for (int check1 = 0; check1 < gTempSC.Count; check1++)
+                int HowManyPathsAway = (int)ABLine.howManyPathsAway;
+                if (HowManyPathsAway > 0) HowManyPathsAway++;
+
+                //Console.WriteLine(lblCurveLineName.Text);
+                if (triStripSC.Count < 1)
                 {
-                    if (gTempSC[check1].ptA.easting == ABLine.currentLinePtA.easting &&
-                    gTempSC[check1].ptA.northing == ABLine.currentLinePtA.northing &&
-                    gTempSC[check1].ptB.easting == ABLine.currentLinePtB.easting &&
-                    gTempSC[check1].ptB.northing == ABLine.currentLinePtB.northing &&
-                    gTempSC[check1].name == lblCurveLineName.Text)
+                    triStripSC.Add(new CPatches(this));
+                    area_delete = false;
+                }
+
+                // ckeck if line is worded area for delete
+                for (int i = 0; i < triStripSC.Count; i++)
+                {
+                    if ((triStripSC[i].nameAB == lblCurveLineName.Text) && (triStripSC[i].skip_line == HowManyPathsAway))
                     {
-                        //SC_DeleteLinebyHand();
-                        gTempSC.RemoveAt(check1);
-                        triStripSC.RemoveAt(check1);
-                        goto DrawNewPatches;
+                        area_delete = true;
+                        line_Index = (int)triStripSC[i].triangleList[0].heading;
+                        triStripSC[i].nameAB = Convert.ToString(line_Index);
+                        //triStripSC.RemoveAt(i);
+                        areaToDelete = i;
+                        goto Area_delete;
                     }
                 }
 
-                gTempSC.Add(new CTrk());
-                max = gTempSC.Count - 1;
-                gTempSC[max].ptA.easting = ABLine.currentLinePtA.easting;
-                gTempSC[max].ptA.northing = ABLine.currentLinePtA.northing;
-                gTempSC[max].ptB.easting = ABLine.currentLinePtB.easting;
-                gTempSC[max].ptB.northing = ABLine.currentLinePtB.northing;
-                gTempSC[max].name = lblCurveLineName.Text;
+                // new list for worded area
                 triStripSC.Add(new CPatches(this));
- 
-                vec3 pos = new vec3(222, 77, 111);
+                selected_area = triStripSC.Count - 1;
+                triStripSC[selected_area].nameAB = lblCurveLineName.Text;
+                triStripSC[selected_area].skip_line = HowManyPathsAway;
 
-                Color field = fieldColorDay;
-                if (!isDay) field = fieldColorNight;
-                //pos = new vec3(field.R, field.G, field.B);
-                pos = new vec3(222, 77, 111);
+                // new list for worded area triangles
+                triStripSC[selected_area].triangleList = new List<vec3>();
 
+                vec3 pos = new vec3(222, 77, 111 + selected_area);  // cover color  + selected_area
+                if (area_delete)
+                {
+                    Color field = fieldColorDay;
+                    if (!isDay) field = fieldColorNight;
+                    pos = new vec3(field.R, field.G, field.B);
+                }
 
-                triStripSC[max].triangleList.Add(pos); //color triangleListbyHand
-                triStripSC[max].patchList.Add(triStripSC[max].triangleList);
+                triStripSC[selected_area].triangleList.Add(pos); //color triangleListbyHand
+                                                                 //triStripSC[j].patchList.Add(triStrip[0].triangleList);
+
 
                 double dist = glm.Distance(ABLine.currentLinePtA, ABLine.currentLinePtB);
                 double x = dist / 10; //10
 
                 pos.heading = 0;
 
-                for (i = 0; i < x; i++)
+                for (int i = 0; i < x; i++)
                 {
 
                     //left side
                     pos.easting = (Math.Cos(ABLine.abHeading) * -(tool.width / 2)) + ABLine.currentLinePtA.easting - ((ABLine.currentLinePtA.easting - ABLine.currentLinePtB.easting) / x * i);
                     pos.northing = (Math.Sin(ABLine.abHeading) * +(tool.width / 2)) + ABLine.currentLinePtA.northing - ((ABLine.currentLinePtA.northing - ABLine.currentLinePtB.northing) / x * i);
                     //add the point to List
-                    triStripSC[max].triangleList.Add(pos);
+                    triStripSC[selected_area].triangleList.Add(pos);
                     //Right side
                     pos.easting = (Math.Cos(ABLine.abHeading) * +(tool.width / 2)) + ABLine.currentLinePtA.easting - ((ABLine.currentLinePtA.easting - ABLine.currentLinePtB.easting) / x * i);
                     pos.northing = (Math.Sin(ABLine.abHeading) * -(tool.width / 2)) + ABLine.currentLinePtA.northing - ((ABLine.currentLinePtA.northing - ABLine.currentLinePtB.northing) / x * i);
                     //add the point to List
-                    triStripSC[max].triangleList.Add(pos);
+                    triStripSC[selected_area].triangleList.Add(pos);
 
                 }
 
-                //patchSaveList.Add(triStrip[0].triangleList);   // save when close the field
-                DrawNewPatches:
-                triStrip[0].patchList?.Clear();
-                
-
-                for (int imax = 0; imax < max; imax++)
+                Area_delete:
+                if (area_delete)
                 {
-                    triStrip[0].patchList.Add(triStripSC[imax].triangleList);  //no save when close the field
+                    SC_DeleteLinebyHand();
+                    selected_area = line_Index;
                 }
+                //Console.Write("triStripSC.Count 3 ");
+                //Console.WriteLine((triStripSC.Count));
+
+                // triStrip[0].patchList.Clear();
+                //SC_DeleteLinebyHand();
+                if (!area_delete)
+                //for (int ij = 1; ij < triStripSC.Count; ij++)
+                {
+                    triStrip[0].patchList.Add(triStripSC[selected_area].triangleList);  //no save when close the field
+                }
+            }
+            else if (trk.gArr[trk.idx].mode == (int)TrackMode.Curve) //4 = Curve
+            {
+                int HowManyPathsAway = (int)curve.howManyPathsAway;
+                if (HowManyPathsAway > 0) HowManyPathsAway++;
+
+                //Console.WriteLine(lblCurveLineName.Text);
+                if (triStripSC.Count < 1)
+                {
+                    triStripSC.Add(new CPatches(this));
+                    area_delete = false;
+                }
+
+                // ckeck if line is worded area for delete
+                for (int i = 0; i < triStripSC.Count; i++)
+                {
+                    if ((triStripSC[i].nameAB == lblCurveLineName.Text) && (triStripSC[i].skip_line == HowManyPathsAway))
+                    {
+                        area_delete = true;
+                        line_Index = (int)triStripSC[i].triangleList[0].heading;
+                        triStripSC[i].nameAB = Convert.ToString(line_Index);
+                        //triStripSC.RemoveAt(i);
+                        areaToDelete = i;
+                        goto Area_delete;
+                    }
+                }
+
+                // new list for worded area
+                triStripSC.Add(new CPatches(this));
+                selected_area = triStripSC.Count - 1;
+                triStripSC[selected_area].nameAB = lblCurveLineName.Text;
+                triStripSC[selected_area].skip_line = HowManyPathsAway;
+
+                // new list for worded area triangles
+                triStripSC[selected_area].triangleList = new List<vec3>();
+
+                vec3 pos = new vec3(222, 77, 111 + selected_area);  // cover color  + selected_area
+                if (area_delete)
+                {
+                    Color field = fieldColorDay;
+                    if (!isDay) field = fieldColorNight;
+                    pos = new vec3(field.R, field.G, field.B);
+                }
+
+                triStripSC[selected_area].triangleList.Add(pos); //color triangleListbyHand
+
+                int distAway = 0;
+                double x = trk.gArr[trk.idx].curvePts.Count;
+                int linie = trk.idx;
+                if (HowManyPathsAway < 0)
+                {
+                    HowManyPathsAway++;
+                    distAway = (int)tool.width * HowManyPathsAway - (int)tool.width / 2;
+                }
+                else
+                {
+                    distAway = (int)tool.width * HowManyPathsAway + (int)tool.width / 2;
+                }
+
+                for (int i = 0; i < x; i++)
+                {
+
+                    //left side
+                    pos.easting = curve.track.curvePts[i].easting + (Math.Cos(curve.track.curvePts[i].heading) * +(tool.width / 2)) + (Math.Sin(glm.PIBy2 + curve.track.curvePts[i].heading) * distAway);
+                    pos.northing = curve.track.curvePts[i].northing + (Math.Sin(curve.track.curvePts[i].heading) * -(tool.width / 2)) + (Math.Cos(glm.PIBy2 + curve.track.curvePts[i].heading) * distAway);
+                    pos.heading = curve.track.curvePts[i].heading;
+                    //add the point to List
+                    triStripSC[selected_area].triangleList.Add(pos);
+                    //Right side
+                    pos.easting = curve.track.curvePts[i].easting + (Math.Cos(curve.track.curvePts[i].heading) * -(tool.width / 2)) + (Math.Sin(glm.PIBy2 + curve.track.curvePts[i].heading) * distAway);
+                    pos.northing = curve.track.curvePts[i].northing + (Math.Sin(curve.track.curvePts[i].heading) * +(tool.width / 2)) + (Math.Cos(glm.PIBy2 + curve.track.curvePts[i].heading) * distAway);
+                    pos.heading = trk.gArr[linie].curvePts[i].heading;
+                    //add the point to List
+                    triStripSC[selected_area].triangleList.Add(pos);
+
+                }
+
+                Area_delete:
+                if (area_delete)
+                {
+                    SC_DeleteLinebyHand();
+                    selected_area = line_Index;
+                }
+                //Console.Write("triStripSC.Count 3 ");
+                //Console.WriteLine((triStripSC.Count));
+
+                // triStrip[0].patchList.Clear();
+                //SC_DeleteLinebyHand();
+                if (!area_delete)
+                //for (int ij = 1; ij < triStripSC.Count; ij++)
+                {
+                    triStrip[0].patchList.Add(triStripSC[selected_area].triangleList);  //no save when close the field
+                }
+
             }
         }
 
         public void SC_DeleteLinebyHand()
         {
-            Console.WriteLine("Sie wollen eine pseudo SC löschen : 1");
+            //Console.WriteLine("Sie wollen eine pseudo SC löschen : 1");
             vec3 pos = new vec3(0, 0, 0);  //fieldColorDay, fieldColorNight
             int found = -1;
             int i = 0;
@@ -1692,46 +1802,23 @@ namespace AgOpenGPS
                     int count2 = triList.Count;
                     if (count2 > 0)
                     {
-                        if (triList[0].easting == 222 & triList[0].northing == 77 & triList[0].heading == 111)
+                        if (triList[0].easting == 222 & triList[0].northing == 77 & triList[0].heading == line_Index)
                         {
                             found = i;
                         }
                     }
                     i++;
                 }
+
                 if (found > -1)
                 {
-                    //triStrip[0].patchList.RemoveAt(found);  // delete only one handmade 
-                    triStrip[0].patchList.Clear();  // delete all handmade areas
-
+                    triStrip[0].patchList.RemoveAt(found);  // delete only one handmade 
+                                                            //triStrip[0].patchList.Clear();  // delete all handmade areas
                 }
             }
-            //the bounding box of the camera for cullling.
-            // search in contour file
 
             FileEreaseSCbyHanddone();
-            /*         if (patchSaveList.Count > 0)
-                     {
-                         found = -1;
-                         i = 0;
-                         //for each patch, write out the list of triangles to the file
-                         foreach (var triList in patchSaveList)
-                         {
-                             int count2 = triList.Count;
-                             if (count2 > 0)
-                             {
-                                 if (triList[0].easting == 222 & triList[0].northing == 77 & triList[0].heading == 111)
-                                 {
-                                     found = i;
-                                 }
-                             }
-                             i++;
-                         }
-                         if (found > -1)
-                         {
-                             patchSaveList.RemoveAt(found);
-                         }
-                     }*/
         }
+
     }//end class
 }//end namespace
